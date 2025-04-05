@@ -9,7 +9,6 @@
 <link rel="stylesheet" href="<%=request.getContextPath()+"/css/master.css"%>">
 <link rel="stylesheet" href="<%=request.getContextPath()+"/css/fontawesome/css/all.min.css"%>">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<script src="<%=request.getContextPath()+"/js/data/services.js"%>"></script>
 <script src="<%=request.getContextPath()+"/js/data/slide.js"%>"></script>
 <%
     UserModel logUser = (UserModel)session.getAttribute("user");
@@ -28,7 +27,7 @@
                 <li><a href="<%=pathUrl+"#offersPage"%>">Offers</a></li>
                 <li><a href="<%=pathUrl+"#services"%>">Services</a></li>
 
-                <li><a href="<%=request.getContextPath()+"/booknow.jsp"%>" id="booking-link">Book Now</a></li>
+                <li><a href="<%=request.getContextPath()+"/createAppointment.jsp"%>" id="booking-link">Book Now</a></li>
                 <li><a href="#" id="login-btn">Login</a></li>
             </ul>
         </nav>
