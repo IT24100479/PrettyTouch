@@ -42,14 +42,12 @@
 
             let description = service.data && service.data.length > 0 ? service.data[0] : "This is one of our exclusive offers!";
 
-            card.innerHTML = imgHTML+`
-                    <div class="service-content">
-                        <h3>${service.key}</h3>
-                        <p>${description}</p>
-                        <span class="price">From LKR. ${service.price.toLocaleString()}</span>
-                        <a href="booknow.html?id=${service.id}" class="btn">Book Now</a>
-                    </div>
-                `;
+            card.innerHTML = imgHTML+"<div class=\"service-content\">"+
+                "<h3>"+service.key+"</h3>"+
+                        "<p>"+description+"</p>"+
+                        "<span class=\"price\">From LKR. "+service.price.toLocaleString()+"</span>"+
+                        "<a href=\"booknow.html?id="+service.id+"\" class=\"btn\">Book Now</a>"+
+                    "</div>";
 
             grid.appendChild(card);
         }else{
@@ -68,13 +66,13 @@
             });
             const price = document.createElement('div');
             price.className = 'offer-price';
-            price.innerHTML = `LKR. ${service.price.toLocaleString()} <span>LKR. ${service.maxPrice.toLocaleString()}</span>`;
+            price.innerHTML = "LKR. "+service.price.toLocaleString()+" <span>LKR. "+service.maxPrice.toLocaleString()+"</span>";
 
             body.appendChild(ul);
             body.appendChild(price);
             const link = document.createElement('div');
             link.className = 'offer-link';
-            link.innerHTML = `<a href="booknow.html?id=${service.id}">Book now & Enjoy your Offer</a>`;
+            link.innerHTML = "<a href=\"booknow.html?id="+service.id+"\">Book now & Enjoy your Offer</a>";
             card.appendChild(header);
             card.appendChild(body);
             card.appendChild(link);
