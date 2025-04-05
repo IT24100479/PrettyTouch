@@ -28,6 +28,16 @@
             <h3 style="display: flex;justify-content: center;">Please Log In To Book An Appointment</h3>
             <%}else{%>
                 <form class="booking-form" id="appointment-form">
+                    <% if (logUser!=null && "admin".equalsIgnoreCase(logUser.getRole())) { %>
+                        <div class="form-group">
+                            <label for="client">Client Name</label>
+                            <select id="client" name="client" required>
+                                <option value="">Select a user</option>
+                            </select>
+                        </div>
+                    <%}else{%>
+                    <input type="hidden" name="client" value="<%=logUser.getUsername()%>"/>
+                    <%}%>
                     <div class="form-group">
                         <label for="service">Service</label>
                         <select id="service" name="service" required>

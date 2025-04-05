@@ -20,9 +20,16 @@ public class UserLoginServlet extends HttpServlet {
             if (req.getParameter("username").equals("j") && req.getParameter("password").equals("123")) {
                 HttpSession session = req.getSession(true);
                 user.setUsername(req.getParameter("username"));
+                user.setRole("user");
                 session.setAttribute("user", user);
                 resp.getWriter().write("{\"msg\":\"login success\"}");
-            }else{
+            } else if (req.getParameter("username").equals("s") && req.getParameter("password").equals("456")) {
+                HttpSession session = req.getSession(true);
+                user.setUsername(req.getParameter("username"));
+                user.setRole("admin");
+                session.setAttribute("user", user);
+                resp.getWriter().write("{\"msg\":\"login success\"}");
+            } else{
                 resp.getWriter().write("{\"msg\":\"Invalid User Name Or Password\"}");
             }
         }else {
