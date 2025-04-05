@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.janani.prettytouch.model.UserModel" %><%--
   Created by IntelliJ IDEA.
   User: jakli
   Date: 2025-04-05
@@ -11,6 +11,10 @@
     <title>BookNow</title>
     <link rel="stylesheet" href="<%=request.getContextPath()+"/css/booking.css"%>">
     <script src="<%=request.getContextPath()+"/js/data/services.js"%>"></script>
+    <%
+        UserModel logUser = (UserModel)session.getAttribute("user");
+
+    %>
 </head>
 <body>
 <jsp:include page="header.jsp"/>
@@ -18,31 +22,36 @@
 <!-- Booking Page -->
 <section class="booking-page">
     <div class="container">
-        <h2 class="section-title">Book an Appointment</h2>
+        <h2 class="section-title">Book An Appointment</h2>
         <div class="booking-container">
-            <form class="booking-form" id="appointment-form">
-                <div class="form-group">
-                    <label for="service">Service</label>
-                    <select id="service" name="service" required>
-                        <option value="">Select a Service</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="date">Date</label>
-                    <input type="date" id="date" name="date" required>
-                </div>
-                <div class="form-group">
-                    <label for="time">Time</label>
-                    <select id="time" name="time" required>
-                        <option value="">Select a Time Slot</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="notes">Special Requests</label>
-                    <textarea id="notes" name="notes"></textarea>
-                </div>
-                <button type="submit" class="btn" id="book-now-btn">Confirm Booking</button>
-            </form>
+            <% if(logUser==null){%>
+            <h3 style="display: flex;justify-content: center;">Please Log In To Book An Appointment</h3>
+            <%}else{%>
+                <form class="booking-form" id="appointment-form">
+                    <div class="form-group">
+                        <label for="service">Service</label>
+                        <select id="service" name="service" required>
+                            <option value="">Select a Service</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Date</label>
+                        <input type="date" id="date" name="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="time">Time</label>
+                        <select id="time" name="time" required>
+                            <option value="">Select a Time Slot</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="notes">Special Requests</label>
+                        <textarea id="notes" name="notes"></textarea>
+                    </div>
+                    <button type="submit" class="btn" id="book-now-btn">Confirm Booking</button>
+                </form>
+            <%}%>
+
         </div>
     </div>
 </section>

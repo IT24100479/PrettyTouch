@@ -10,6 +10,8 @@
 <link rel="stylesheet" href="<%=request.getContextPath()+"/css/fontawesome/css/all.min.css"%>">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="<%=request.getContextPath()+"/js/data/slide.js"%>"></script>
+<script src="<%=request.getContextPath()+"/js/jQuery/jquery-3.7.1.min.js"%>"></script>
+
 <%
     UserModel logUser = (UserModel)session.getAttribute("user");
     String pathUrl = request.getRequestURI().contains("index.jsp")||
@@ -28,7 +30,11 @@
                 <li><a href="<%=pathUrl+"#services"%>">Services</a></li>
 
                 <li><a href="<%=request.getContextPath()+"/createAppointment.jsp"%>" id="booking-link">Book Now</a></li>
-                <li><a href="#" id="login-btn">Login</a></li>
+                <% if (logUser==null) { %>
+                    <li><a href="#" id="login-btn">Login</a></li>
+                <%}else{%>
+                    <li><a href="<%=request.getContextPath()+"/user/logout"%>" >Logout</a></li>
+                <%}%>
             </ul>
         </nav>
         <div class="mobile-menu" id="mobile-menu">
@@ -42,6 +48,7 @@
         <span class="close">&times;</span>
         <div class="login-form">
             <h2>Login to Your Account</h2>
+            <h3 id="loginerror" style="display: flex;justify-content: center;color: red;"></h3>
             <form id="login-form">
                 <div class="form-group">
                     <label for="username">Username</label>
@@ -120,6 +127,10 @@
         loginModal.style.display = 'block';
     });
 
+    <% if (logUser==null && request.getRequestURI().contains("/createAppointment.jsp")) { %>
+        loginModal.style.display = 'block';
+    <%}%>
+
     closeLogin.addEventListener('click', () => {
         loginModal.style.display = 'none';
     });
@@ -177,20 +188,23 @@
         e.preventDefault();
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
-        const userType = document.querySelector('.user-type-btn.active').dataset.type;
-
-        // Simple validation
-        if (username && password) {
-            alert(`Logged in as ${userType}: ${username}`);
-            loginModal.style.display = 'none';
-
-            // Redirect to booking page if booking link was clicked before login
-            if (sessionStorage.getItem('redirectToBooking')) {
-                sessionStorage.removeItem('redirectToBooking');
-                window.open('booknow.html', '_blank');
+        $.ajax({
+            url: '<%=request.getContextPath()+"/user/login"%>', // Sample API
+            type: 'POST',
+            data: {
+                username: username,
+                password: password
+            },
+            success: function(response) {
+                if(response.msg=="login success"){
+                    window.location.reload();
+                }else{
+                    $("#loginerror").html(response.msg);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log(JSON.stringify(error));
             }
-        } else {
-            alert('Please enter both username and password');
-        }
+        });
     });
 </script>
