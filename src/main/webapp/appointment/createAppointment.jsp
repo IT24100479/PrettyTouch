@@ -17,7 +17,7 @@
     %>
 </head>
 <body>
-<jsp:include page="header.jsp"/>
+<jsp:include page="../root/header.jsp"/>
 
 <!-- Booking Page -->
 <section class="booking-page">
@@ -65,7 +65,7 @@
         </div>
     </div>
 </section>
-<jsp:include page="footer.jsp"/>
+<jsp:include page="../root/footer.jsp"/>
 <script>
     const serviceSelect = document.getElementById('service');
     const params = new URLSearchParams(window.location.search);

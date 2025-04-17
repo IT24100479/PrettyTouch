@@ -11,7 +11,7 @@
   <title>PrettyTouch</title>
 </head>
 <body>
-<jsp:include page="header.jsp"/>
+<jsp:include page="root/header.jsp"/>
 
 <!-- Slideshow Hero Section -->
 <section class="slideshow" id="home"></section>
@@ -33,7 +33,7 @@
   </div>
 </section>
 
-<jsp:include page="indexOffersServices.jsp"/>
+<jsp:include page="services/indexOffersServices.jsp"/>
 
 <!-- Contact Information Section -->
 <section class="contact-info">
@@ -71,7 +71,7 @@
     </div>
   </div>
 </section>
-<jsp:include page="footer.jsp"/>
+<jsp:include page="root/footer.jsp"/>
 
 <script>
   const homeSection = document.getElementById('home');

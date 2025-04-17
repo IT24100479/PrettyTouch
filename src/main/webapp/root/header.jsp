@@ -29,7 +29,7 @@
                 <li><a href="<%=pathUrl+"#offersPage"%>">Offers</a></li>
                 <li><a href="<%=pathUrl+"#services"%>">Services</a></li>
 
-                <li><a href="<%=request.getContextPath()+"/createAppointment.jsp"%>" id="booking-link">Book Now</a></li>
+                <li><a href="<%=request.getContextPath()+"/appointment/createAppointment.jsp"%>" id="booking-link">Book Now</a></li>
                 <% if (logUser!=null && "admin".equalsIgnoreCase(logUser.getRole())) { %>
                     <li><a href="#">Appointment</a></li>
                     <li><a href="#">User Manage</a></li>
@@ -134,7 +134,7 @@
         loginModal.style.display = 'block';
     });
 
-    <% if (logUser==null && request.getRequestURI().contains("/createAppointment.jsp")) { %>
+    <% if (logUser==null && request.getRequestURI().contains("/appointment/createAppointment.jsp")) { %>
         loginModal.style.display = 'block';
     <%}%>
 
