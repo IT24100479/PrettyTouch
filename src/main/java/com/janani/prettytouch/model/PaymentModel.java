@@ -1,5 +1,7 @@
 package com.janani.prettytouch.model;
 
+import com.janani.prettytouch.services.AppointmentService;
+
 public class PaymentModel extends Model {
     private int appointmentId;
     private double amount;
@@ -21,8 +23,7 @@ public class PaymentModel extends Model {
     }
 
     public AppointmentModel getAppointment() {
-        //ToDo return appointment object using id
-        return null;
+        return (AppointmentModel) AppointmentService.getInstance().getById(appointmentId);
     }
 
     public Double getBalance (){

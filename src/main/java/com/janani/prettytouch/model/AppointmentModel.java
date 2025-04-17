@@ -1,6 +1,8 @@
 package com.janani.prettytouch.model;
 
 
+import com.janani.prettytouch.services.ServiceService;
+
 import java.time.LocalDate;
 
 public class AppointmentModel extends Model {
@@ -26,8 +28,7 @@ public class AppointmentModel extends Model {
     }
 
     public ServiceModel getService() {
-        //ToDo return service object using id
-        return null;
+        return (ServiceModel) ServiceService.getInstance().getById(serviceId);
     }
 
     public void setServiceId(String serviceId) {

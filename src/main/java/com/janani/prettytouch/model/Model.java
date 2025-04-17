@@ -38,7 +38,7 @@ public class Model {
     }
 
     public UserModel getCreatedByUser() {
-        return UserService.getInstance().getUserById(createdBy);
+        return (UserModel) UserService.getInstance().getById(createdBy);
     }
 
     public void setCreatedBy(String createdBy) {
