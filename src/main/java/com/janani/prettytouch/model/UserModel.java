@@ -1,9 +1,30 @@
 package com.janani.prettytouch.model;
 
-public class UserModel {
+import java.time.LocalDate;
+
+public class UserModel extends Model {
     private String username;
     private String password;
+    private String firstName;
+    private String lastName;
     private String role;
+    private String phoneNumber;
+    private LocalDate dob;
+
+    public UserModel(String id, String createdBy, String createdAt, String status, String username, String password, String firstName, String lastName, String role, String phoneNumber, String dob) {
+        super(id, createdBy, createdAt, status);
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.role = role;
+        this.phoneNumber = phoneNumber;
+        setDOB(dob);
+    }
+
+    public UserModel() {
+        super();
+    }
 
     public String getUsername() {
         return username;
@@ -21,11 +42,48 @@ public class UserModel {
         this.password = password;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     public String getRole() {
         return role;
     }
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public LocalDate getDob() {
+        return dob;
+    }
+
+    public void setDOB(String dob) {
+        try{
+            this.dob = LocalDate.parse(dob);
+        } catch (Exception e) {
+            e.printStackTrace();
+            this.dob=null;
+        }
     }
 }
