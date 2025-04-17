@@ -1,4 +1,4 @@
-package com.janani.prettytouch.servlet;
+package com.janani.prettytouch.servlet.user;
 
 import com.janani.prettytouch.model.UserModel;
 import jakarta.servlet.ServletException;
