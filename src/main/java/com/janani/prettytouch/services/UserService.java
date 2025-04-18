@@ -1,8 +1,12 @@
 package com.janani.prettytouch.services;
 
+import com.janani.prettytouch.constVar.FIleConst;
 import com.janani.prettytouch.model.Model;
 import com.janani.prettytouch.model.UserModel;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
 
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,8 +25,34 @@ public class UserService implements Services{
     }
     @Override
     public void ReadAll() {
-        //TODO read all users form csv file and file allUsers list
         allUsers = new ArrayList<Model>();
+        String filePath = FIleConst.FILE_PATH + FIleConst.USER_FILE;
+        try {
+            // Create an object of file reader
+            // class with CSV file as a parameter.
+            FileReader filereader = new FileReader(filePath);
+
+            // create csvReader object and skip first Line
+            CSVReader csvReader = new CSVReaderBuilder(filereader)
+                    .withSkipLines(1)
+                    .build();
+            List<String[]> allData = csvReader.readAll();
+
+            for (int i = 0; i < allData.size(); i++) {
+                String[] row = allData.get(i);
+                if (row.length >= 11) {
+                    UserModel user = new UserModel(row[0],
+                            row[1],row[2],row[3],row[4],row[5],
+                            row[6],row[7],row[8],row[9],row[10]
+                            );
+                    allUsers.add(user);
+                }
+            }
+            csvReader.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     @Override
     public List<Model> getAll() {
