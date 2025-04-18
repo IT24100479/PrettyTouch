@@ -73,7 +73,7 @@
     services.forEach(service => {
         const option = document.createElement('option');
         option.selected = service.id == idFromUrl;
-        option.value = service.name;
+        option.value = service.id;
         option.textContent = service.key+" (LKR. "+service.price.toLocaleString()+")";
         serviceSelect.appendChild(option);
     });
