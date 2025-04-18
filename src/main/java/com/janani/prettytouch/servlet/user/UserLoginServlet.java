@@ -1,6 +1,7 @@
 package com.janani.prettytouch.servlet.user;
 
 import com.janani.prettytouch.model.UserModel;
+import com.janani.prettytouch.services.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -14,22 +15,19 @@ import java.io.IOException;
 public class UserLoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        UserModel user = new UserModel();
+
         resp.setContentType("application/json");
         if (req.getParameter("username") != null && req.getParameter("password") != null) {
-            if (req.getParameter("username").equals("j") && req.getParameter("password").equals("123")) {
+            UserModel user = UserService.getInstance().checkLogin(
+                    req.getParameter("username"),
+                    req.getParameter("password")
+            );
+
+            if (user != null) {
                 HttpSession session = req.getSession(true);
-                user.setUsername(req.getParameter("username"));
-                user.setRole("user");
                 session.setAttribute("user", user);
                 resp.getWriter().write("{\"msg\":\"login success\"}");
-            } else if (req.getParameter("username").equals("s") && req.getParameter("password").equals("456")) {
-                HttpSession session = req.getSession(true);
-                user.setUsername(req.getParameter("username"));
-                user.setRole("admin");
-                session.setAttribute("user", user);
-                resp.getWriter().write("{\"msg\":\"login success\"}");
-            } else{
+            }else {
                 resp.getWriter().write("{\"msg\":\"Invalid User Name Or Password\"}");
             }
         }else {

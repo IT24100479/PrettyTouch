@@ -23,6 +23,19 @@ public class UserService implements Services{
         }
         return userService;
     }
+    public UserModel checkLogin(String username, String password) {
+        if (username != null && password != null) {
+            for (int i = 0; i < allUsers.size(); i++) {
+                UserModel user = (UserModel)allUsers.get(i);
+                if (username.equalsIgnoreCase(user.getUsername()) &&
+                password.equalsIgnoreCase(user.getPassword()) &&
+                user.getStatus()) {
+                    return user;
+                }
+            }
+        }
+        return null;
+    }
     @Override
     public void ReadAll() {
         allUsers = new ArrayList<Model>();
