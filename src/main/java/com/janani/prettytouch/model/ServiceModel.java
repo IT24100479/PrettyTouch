@@ -6,14 +6,25 @@ public class ServiceModel extends Model {
     private String description;
     private double printPrice;
     private double realPrice;
+    private String imageUrl;
 
-    public ServiceModel(String id, String createdBy, String createdAt, String status, String type, String serviceName, String description, String printPrice, String realPrice) {
+    public ServiceModel(String id, String createdBy, String createdAt, String status, String type, String serviceName, String description, String printPrice, String realPrice, String imageUrl) {
         super(id, createdBy, createdAt, status);
         this.type = type;
         this.serviceName = serviceName;
         this.description = description;
         setPrintPrice(printPrice);
-        setRealPrice(realPrice);    }
+        setRealPrice(realPrice);
+        this.imageUrl = imageUrl;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
     public ServiceModel() {
         super();
@@ -48,9 +59,9 @@ public class ServiceModel extends Model {
     }
 
     public void setPrintPrice(String printPrice) {
-        try{
+        try {
             this.printPrice = Double.parseDouble(printPrice);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             this.printPrice = 0.0;
         }
@@ -61,9 +72,9 @@ public class ServiceModel extends Model {
     }
 
     public void setRealPrice(String realPrice) {
-        try{
+        try {
             this.realPrice = Double.parseDouble(realPrice);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             this.realPrice = 0.0;
         }

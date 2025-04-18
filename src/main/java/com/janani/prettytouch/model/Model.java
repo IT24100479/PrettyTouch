@@ -8,7 +8,7 @@ public class Model {
     private int id;
     protected int createdBy;
     protected LocalDate createdAt;
-    protected boolean status;
+    protected String status;
 
     public Model(String id, String createdBy, String createdAt, String status) {
         setId(id);
@@ -64,14 +64,14 @@ public class Model {
     }
 
     public boolean getStatus() {
-        return status;
+        return "1".equals(status);
     }
 
     public String getStatusForCsv() {
-        return status?"1":"0";
+        return status;
     }
 
     public void setStatus(String status) {
-        this.status="1".equals(status);
+        this.status=status;
     }
 }

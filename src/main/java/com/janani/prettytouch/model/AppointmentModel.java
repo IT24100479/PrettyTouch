@@ -45,11 +45,11 @@ public class AppointmentModel extends Model {
     }
 
     public void setDate(String date) {
-        try{
+        try {
             this.date = LocalDate.parse(date);
         } catch (Exception e) {
             e.printStackTrace();
-            this.date=null;
+            this.date = null;
         }
     }
 
@@ -73,4 +73,5 @@ public class AppointmentModel extends Model {
     public void setRequestData(String requestData) {
         this.requestData = requestData;
     }
+
 }
