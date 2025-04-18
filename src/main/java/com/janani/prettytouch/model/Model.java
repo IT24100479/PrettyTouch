@@ -3,11 +3,12 @@ package com.janani.prettytouch.model;
 import com.janani.prettytouch.services.UserService;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Model {
     private int id;
     protected int createdBy;
-    protected LocalDate createdAt;
+    protected LocalDateTime createdAt;
     protected String status;
 
     public Model(String id, String createdBy, String createdAt, String status) {
@@ -50,13 +51,13 @@ public class Model {
         }
     }
 
-    public LocalDate getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
     public void setCreatedAt(String createdAt) {
         try{
-            this.createdAt = LocalDate.parse(createdAt);
+            this.createdAt = LocalDateTime.parse(createdAt);
         } catch (Exception e) {
             e.printStackTrace();
             this.createdAt=null;

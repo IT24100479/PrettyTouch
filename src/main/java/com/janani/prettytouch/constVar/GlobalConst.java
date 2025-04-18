@@ -7,4 +7,5 @@ import java.util.List;
 public class GlobalConst {
     public static final List<String> TIME_SLOT_LIST = List.of("7AM-11AM","11AM-2PM");
     public static final List<String> APPOINTMENT_STATUS_TYPE = List.of("Complete","Pending","Cancel");
+    public static final int QUEUE_SIZE = 5;
 }
