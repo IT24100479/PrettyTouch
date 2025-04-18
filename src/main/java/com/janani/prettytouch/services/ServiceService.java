@@ -16,7 +16,7 @@ public class ServiceService implements Services {
     private static ServiceService service;
 
     private ServiceService() {
-        this.ReadAll();
+        this.readAll();
     }
     public static ServiceService getInstance() {
         if (service == null) {
@@ -26,7 +26,7 @@ public class ServiceService implements Services {
     }
 
     @Override
-    public void ReadAll() {
+    public void readAll() {
         allServices = new ArrayList<Model>();
         String filePath = FIleConst.FILE_PATH + FIleConst.SERVICE_FILE;
         try {
@@ -70,17 +70,22 @@ public class ServiceService implements Services {
     }
 
     @Override
-    public boolean Add(Model model) {
+    public boolean add(Model model) {
         return false;
     }
 
     @Override
-    public boolean Update(Model model) {
+    public boolean update(Model model) {
         return false;
     }
 
     @Override
-    public boolean Delete(Model model) {
+    public boolean delete(int id) {
         return false;
+    }
+
+    @Override
+    public boolean updateFile() {
+        return true;
     }
 }

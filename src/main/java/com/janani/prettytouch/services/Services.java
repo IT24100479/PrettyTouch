@@ -7,10 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface Services {
-    public void ReadAll();
+    public void readAll();
     public List<Model> getAll();
     public Model getById(int id);
-    public boolean Add(Model model);
-    public boolean Update(Model model);
-    public boolean Delete(Model model);
+    public boolean add(Model model);
+    public boolean update(Model model);
+    public boolean delete(int id);
+    public boolean updateFile();
 }

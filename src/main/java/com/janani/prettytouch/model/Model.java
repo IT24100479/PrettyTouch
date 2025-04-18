@@ -5,8 +5,8 @@ import com.janani.prettytouch.services.UserService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class Model {
-    private int id;
+public abstract class Model {
+    protected int id;
     protected int createdBy;
     protected LocalDateTime createdAt;
     protected String status;
@@ -75,4 +75,6 @@ public class Model {
     public void setStatus(String status) {
         this.status=status;
     }
+
+    public abstract String[] getCSVLine();
 }

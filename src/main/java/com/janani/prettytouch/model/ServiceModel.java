@@ -30,6 +30,11 @@ public class ServiceModel extends Model {
         super();
     }
 
+    @Override
+    public String[] getCSVLine() {
+        return new String[]{String.valueOf(id), String.valueOf(createdBy), String.valueOf(createdAt), String.valueOf(status), String.valueOf(type), String.valueOf(serviceName), String.valueOf(description), String.valueOf(printPrice), String.valueOf(realPrice), String.valueOf(imageUrl)};
+    }
+
     public String getType() {
         return type;
     }

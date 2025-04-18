@@ -23,6 +23,11 @@ public class AppointmentModel extends Model {
         super();
     }
 
+    @Override
+    public String[] getCSVLine() {
+        return new String[]{String.valueOf(id), String.valueOf(createdBy), String.valueOf(createdAt), String.valueOf(status), String.valueOf(serviceId), String.valueOf(date), String.valueOf(timeSlotId), String.valueOf(requestData)};
+    }
+
     public int getServiceId() {
         return serviceId;
     }

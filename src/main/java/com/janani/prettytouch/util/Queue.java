@@ -2,14 +2,19 @@ package com.janani.prettytouch.util;
 
 import com.janani.prettytouch.model.Model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Queue {
     private List<Model> queueList;
     private int size;
+    private final QuickSort quickSort;
 
     public Queue(int size) {
+        this.queueList = new ArrayList<>();
         this.size = size;
+        this.quickSort = new QuickSort();
     }
 
     public Model peekFront(){
@@ -17,19 +22,19 @@ public class Queue {
     }
 
     public Model remove(){
-        if(queueList.isEmpty()){
-            Model model = queueList.getFirst();
-            queueList.removeFirst();
+        if(this.queueList.isEmpty()){
+            Model model = this.queueList.getFirst();
+            this.queueList.removeFirst();
             return model;
         }
         return null;
     }
 
     public boolean findAndRemove(int id){
-        for(int i = 0; i < queueList.size(); i++){
-            Model model = queueList.get(i);
+        for(int i = 0; i < this.queueList.size(); i++){
+            Model model = this.queueList.get(i);
             if(model.getId() == id){
-                queueList.remove(i);
+                this.queueList.remove(i);
                 return true;
             }
         }
@@ -37,31 +42,38 @@ public class Queue {
     }
 
     public boolean insert(Model item){
-        if (queueList.size() < size) {
-            queueList.add(item);
+        if (this.queueList.size() < this.size) {
+            this.queueList.add(item);
             return true;
         }
         return false;
     }
 
     public boolean sortAndInsert(Model item){
-        if (queueList.size() < size) {
-            queueList.add(item);
+        if (this.queueList.size() < this.size) {
+            this.queueList.add(item);
+            Model[] temp = this.queueList.toArray(Model[]::new);
+            this.quickSort.quickSort(temp, 0, this.queueList.size() - 1);
+            this.queueList =  new ArrayList<>(Arrays.asList(temp));
             return true;
         }
         return false;
     }
 
+    public List<Model> getQueueList() {
+        return this.queueList;
+    }
+
     public boolean isEmpty(){
-        return queueList.isEmpty();
+        return this.queueList.isEmpty();
     }
 
     public boolean isFull(){
-        return queueList.size() == size;
+        return this.queueList.size() == this.size;
     }
 
     public int getCount(){
-        return queueList.size();
+        return this.queueList.size();
     }
 
 }

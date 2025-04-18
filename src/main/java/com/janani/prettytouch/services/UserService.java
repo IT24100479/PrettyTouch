@@ -15,7 +15,7 @@ public class UserService implements Services{
     private static UserService userService;
 
     private UserService() {
-        this.ReadAll();
+        this.readAll();
     }
     public static UserService getInstance() {
         if (userService == null) {
@@ -37,7 +37,7 @@ public class UserService implements Services{
         return null;
     }
     @Override
-    public void ReadAll() {
+    public void readAll() {
         allUsers = new ArrayList<Model>();
         String filePath = FIleConst.FILE_PATH + FIleConst.USER_FILE;
         try {
@@ -78,18 +78,23 @@ public class UserService implements Services{
     }
 
     @Override
-    public boolean Add(Model user) {
+    public boolean add(Model user) {
         //ToDo find user from allUsers list and add data same time it need to add data in csv file
         return true;
     }
     @Override
-    public boolean Update(Model user) {
+    public boolean update(Model user) {
         //ToDo find user from allUsers list and update data same time it need to update data in csv file
         return true;
     }
     @Override
-    public boolean Delete(Model user) {
+    public boolean delete(int id) {
         //ToDo soft delete only status change 1 to 0
+        return true;
+    }
+
+    @Override
+    public boolean updateFile() {
         return true;
     }
 

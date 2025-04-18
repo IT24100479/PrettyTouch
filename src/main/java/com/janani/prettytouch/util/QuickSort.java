@@ -1,7 +1,11 @@
 package com.janani.prettytouch.util;
 
+import com.janani.prettytouch.model.Model;
+
+import java.time.LocalDateTime;
+
 public class QuickSort {
-    public static void quickSort(int[] arr, int low, int high) {
+    public void quickSort(Model[] arr, int low, int high) {
         if (low < high) {
             // Partition the array and get the pivot index
             int pi = partition(arr, low, high);
@@ -13,24 +17,24 @@ public class QuickSort {
     }
 
     // Method to partition the array
-    private static int partition(int[] arr, int low, int high) {
-        int pivot = arr[high]; // Choose the last element as pivot
+    private int partition(Model[] arr, int low, int high) {
+        LocalDateTime pivot = arr[high].getCreatedAt(); // Choose the last element as pivot
         int i = low - 1; // Index of smaller element
 
         for (int j = low; j < high; j++) {
             // If current element is smaller than or equal to pivot
-            if (arr[j] <= pivot) {
+            if (arr[j].getCreatedAt().isBefore(pivot) || arr[j].getCreatedAt().equals(pivot)) {
                 i++;
 
                 // Swap arr[i] and arr[j]
-                int temp = arr[i];
+                Model temp = arr[i];
                 arr[i] = arr[j];
                 arr[j] = temp;
             }
         }
 
         // Swap arr[i+1] and arr[high] (or pivot)
-        int temp = arr[i + 1];
+        Model temp = arr[i + 1];
         arr[i + 1] = arr[high];
         arr[high] = temp;
 
