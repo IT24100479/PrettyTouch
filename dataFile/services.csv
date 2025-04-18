@@ -1,0 +1,9 @@
+id,createdBy,createdAt,status,type,serviceName,description,printPrice,realPrice,imageUrl
+1,1,2025-04-18T11:42:28,1,service,Hair Styling,"Professional haircuts, styling, and treatments tailored to your unique hair type and personal style.",Rs.2500,Rs.2500,
+2,1,2025-04-18T11:42:29,1,service,Hair Colouring,"Expert color services including highlights, balayage, ombre, and full color transformations.",Rs.1000,Rs.1000,
+3,1,2025-04-18T11:42:30,0,service,Facials,"Rejuvenating facial treatments designed to cleanse, exfoliate, and nourish your skin.",Rs.5000,Rs.5000,
+4,1,2025-04-18T11:42:31,1,offer,Bridal Package,"Complete bridal makeup
+Professional hair styling
+Manicure & pedicure
+Free trial session
+Complimentary bridal consultation",Rs.25000,Rs.35000,

@@ -3,12 +3,13 @@ package com.janani.prettytouch.model;
 import com.janani.prettytouch.services.UserService;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
-public class Model {
-    private int id;
+public abstract class Model {
+    protected int id;
     protected int createdBy;
-    protected LocalDate createdAt;
-    protected boolean status;
+    protected LocalDateTime createdAt;
+    protected String status;
 
     public Model(String id, String createdBy, String createdAt, String status) {
         setId(id);
@@ -50,13 +51,13 @@ public class Model {
         }
     }
 
-    public LocalDate getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
     public void setCreatedAt(String createdAt) {
         try{
-            this.createdAt = LocalDate.parse(createdAt);
+            this.createdAt = LocalDateTime.parse(createdAt);
         } catch (Exception e) {
             e.printStackTrace();
             this.createdAt=null;
@@ -64,14 +65,16 @@ public class Model {
     }
 
     public boolean getStatus() {
-        return status;
+        return "1".equals(status);
     }
 
     public String getStatusForCsv() {
-        return status?"1":"0";
+        return status;
     }
 
     public void setStatus(String status) {
-        this.status="1".equals(status);
+        this.status=status;
     }
+
+    public abstract String[] getCSVLine();
 }

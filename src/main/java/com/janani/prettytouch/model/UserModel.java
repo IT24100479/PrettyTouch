@@ -26,6 +26,11 @@ public class UserModel extends Model {
         super();
     }
 
+    @Override
+    public String[] getCSVLine() {
+        return new String[]{String.valueOf(id), String.valueOf(createdBy), String.valueOf(createdAt), String.valueOf(status), String.valueOf(username), String.valueOf(password), String.valueOf(firstName), String.valueOf(lastName), String.valueOf(role), String.valueOf(phoneNumber), String.valueOf(dob)};
+    }
+
     public String getUsername() {
         return username;
     }

@@ -14,6 +14,11 @@ public class FeedbackModel extends Model {
         super();
     }
 
+    @Override
+    public String[] getCSVLine() {
+        return new String[]{String.valueOf(id), String.valueOf(createdBy), String.valueOf(createdAt), String.valueOf(status), String.valueOf(rating), String.valueOf(comment)};
+    }
+
     public int getRating() {
         return rating;
     }

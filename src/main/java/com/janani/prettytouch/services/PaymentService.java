@@ -10,7 +10,7 @@ public class PaymentService implements Services{
     private static PaymentService paymentService;
 
     private PaymentService() {
-        this.ReadAll();
+        this.readAll();
     }
     public static PaymentService getInstance() {
         if (paymentService == null) {
@@ -20,7 +20,7 @@ public class PaymentService implements Services{
     }
 
     @Override
-    public void ReadAll() {
+    public void readAll() {
 
     }
 
@@ -35,17 +35,22 @@ public class PaymentService implements Services{
     }
 
     @Override
-    public boolean Add(Model model) {
+    public boolean add(Model model) {
         return false;
     }
 
     @Override
-    public boolean Update(Model model) {
+    public boolean update(Model model) {
         return false;
     }
 
     @Override
-    public boolean Delete(Model model) {
+    public boolean delete(int id) {
         return false;
+    }
+
+    @Override
+    public boolean updateFile() {
+        return true;
     }
 }
