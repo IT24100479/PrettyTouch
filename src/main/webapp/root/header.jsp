@@ -34,8 +34,17 @@
 
                 <li><a href="<%=request.getContextPath()+"/appointment/createAppointment.jsp"%>" id="booking-link">Book Now</a></li>
                 <% if (logUser!=null && GlobalConst.USER_TYPE_ADMIN.equalsIgnoreCase(logUser.getRole())) { %>
-                    <li><a href="<%=request.getContextPath()+"/appointment/appointments.jsp"%>">Appointment</a></li>
-                    <li><a href="#">User Manage</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin Panel<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="<%=request.getContextPath()+"/appointment/createAppointment.jsp"%>">Appointment Create</a></li>
+                        <li><a href="<%=request.getContextPath()+"/appointment/appointments.jsp"%>">Appointment Manage</a></li>
+                        <li><a href="<%=request.getContextPath()+"/payment/payment.jsp"%>">Payment</a></li>
+                        <li><a href="<%=request.getContextPath()+"/payment/report.jsp"%>">Payment Report</a></li>
+                        <li><a href="#">User Manage</a></li>
+                    </ul>
+                </li>
                 <%}%>
                 <% if (logUser!=null && GlobalConst.USER_TYPE_USER.equalsIgnoreCase(logUser.getRole())) { %>
                     <li><a href="<%=request.getContextPath()+"/appointment/appointments.jsp"%>">My Appointment</a></li>
