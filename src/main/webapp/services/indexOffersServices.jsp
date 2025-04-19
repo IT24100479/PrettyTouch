@@ -47,7 +47,7 @@
                 "<h3>"+service.key+"</h3>"+
                         "<p>"+description+"</p>"+
                         "<span class=\"price\">From LKR. "+service.price.toLocaleString()+"</span>"+
-                        "<a href=\"<%=request.getContextPath()+"/createAppointment.jsp"%>?id="+service.id+"\" class=\"btn\">Book Now</a>"+
+                        "<a href=\"<%=request.getContextPath()+"/appointment/createAppointment.jsp"%>?id="+service.id+"\" class=\"btn\">Book Now</a>"+
                     "</div>";
 
             grid.appendChild(card);
@@ -73,7 +73,7 @@
             body.appendChild(price);
             const link = document.createElement('div');
             link.className = 'offer-link';
-            link.innerHTML = "<a href=\"<%=request.getContextPath()+"/createAppointment.jsp"%>?id="+service.id+"\">Book now & Enjoy your Offer</a>";
+            link.innerHTML = "<a href=\"<%=request.getContextPath()+"/appointment/createAppointment.jsp"%>?id="+service.id+"\">Book now & Enjoy your Offer</a>";
             card.appendChild(header);
             card.appendChild(body);
             card.appendChild(link);

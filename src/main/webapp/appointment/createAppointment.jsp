@@ -1,4 +1,13 @@
-<%@ page import="com.janani.prettytouch.model.UserModel" %><%--
+<%@ page import="com.janani.prettytouch.model.UserModel" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.janani.prettytouch.services.UserService" %>
+<%@ page import="com.janani.prettytouch.model.Model" %>
+<%@ page import="com.janani.prettytouch.util.TypeConverter" %>
+<%@ page import="com.janani.prettytouch.services.ServiceService" %>
+<%@ page import="com.janani.prettytouch.model.ServiceModel" %>
+<%@ page import="com.janani.prettytouch.constVar.GlobalConst" %>
+<%@ page import="com.janani.prettytouch.model.AppointmentModel" %>
+<%@ page import="com.janani.prettytouch.services.AppointmentService" %><%--
   Created by IntelliJ IDEA.
   User: jakli
   Date: 2025-04-05
@@ -11,14 +20,34 @@
     <title>BookNow</title>
     <link rel="stylesheet" href="<%=request.getContextPath()+"/css/booking.css"%>">
     <script src="<%=request.getContextPath()+"/js/data/services.js"%>"></script>
+
     <%
         UserModel logUser = (UserModel)session.getAttribute("user");
+        String userId = TypeConverter.replaceNull(request.getParameter("uid"));
+        String serviceId = TypeConverter.replaceNull(request.getParameter("id"));
+        String date = TypeConverter.replaceNull(request.getParameter("date"));
+        String timeId = TypeConverter.replaceNull(request.getParameter("time"));
+        String req = TypeConverter.replaceNull(request.getParameter("req"));
+        String appointmentId = TypeConverter.replaceNull(request.getParameter("aid"));
+        if(TypeConverter.stringIsNotEmpty(appointmentId)){
+            AppointmentModel appointmentModel = (AppointmentModel) AppointmentService.getInstance().getById(TypeConverter.stringToInt(appointmentId));
+            if(appointmentModel!=null){
+                userId=TypeConverter.intToString(appointmentModel.getUserId());
+                serviceId=TypeConverter.intToString(appointmentModel.getServiceId());
+                date=TypeConverter.localDateToString(appointmentModel.getDate());
+                timeId=TypeConverter.intToString(appointmentModel.getTimeSlotId());
+                req=TypeConverter.replaceNull(appointmentModel.getRequestData());
+            }
+        }
+        String error = TypeConverter.replaceNull(request.getParameter("error"));
+        boolean isError =TypeConverter.stringIsNotEmpty(error);
 
+        boolean edit = request.getParameter("edit")!=null;
+        String actionUrl = request.getContextPath()+"/appointment/"+(edit?"updateNote":"create");
     %>
 </head>
 <body>
 <jsp:include page="../root/header.jsp"/>
-
 <!-- Booking Page -->
 <section class="booking-page">
     <div class="container">
@@ -27,38 +56,82 @@
             <% if(logUser==null){%>
             <h3 style="display: flex;justify-content: center;">Please Log In To Book An Appointment</h3>
             <%}else{%>
-                <form class="booking-form" id="appointment-form">
-                    <% if (logUser!=null && "admin".equalsIgnoreCase(logUser.getRole())) { %>
+                <% if(isError){%>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Error!</strong> <%=error%>
+                    </div>
+                <%}%>
+                <form class="booking-form" id="appointment-form" method="POST" action="<%=actionUrl%>">
+                    <% if (logUser!=null && GlobalConst.USER_TYPE_ADMIN.equalsIgnoreCase(logUser.getRole())) { %>
                         <div class="form-group">
                             <label for="client">Client Name</label>
-                            <select id="client" name="client" required>
+                            <select id="client" name="client" required <%=edit?"disabled":""%>>
                                 <option value="">Select a user</option>
+                                    <%
+                                    List<Model> users = UserService.getInstance().getAll();
+
+                                    for(int i=0;i<users.size();i++){
+                                        UserModel user = (UserModel) users.get(i);
+                                        if(GlobalConst.USER_TYPE_ADMIN.equalsIgnoreCase(user.getRole())){
+                                            continue;
+                                        }
+                                        if(user.getId()== TypeConverter.stringToInt(userId)){%>
+                                            <option value="<%=user.getId()%>" selected><%=user.getFirstName()+" "+user.getLastName()%></option>
+                                        <%}else{%>
+                                            <option value="<%=user.getId()%>"><%=user.getFirstName()+" "+user.getLastName()%></option>
+                                        <%}
+                                    }
+                                    %>
                             </select>
                         </div>
                     <%}else{%>
-                    <input type="hidden" name="client" value="<%=logUser.getUsername()%>"/>
+                    <input type="hidden" name="client" value="<%=logUser.getId()%>"/>
                     <%}%>
+                    <input type="hidden" name="aid" value="<%=appointmentId%>"/>
                     <div class="form-group">
                         <label for="service">Service</label>
-                        <select id="service" name="service" required>
+                        <select id="service" name="service" required  <%=edit?"disabled":""%>>
                             <option value="">Select a Service</option>
+                            <%
+                                List<Model> services = ServiceService.getInstance().getAll();
+                                for(int i=0;i<services.size();i++){
+                                    ServiceModel service = (ServiceModel) services.get(i);
+                                    if(service.getId()== TypeConverter.stringToInt(serviceId)){%>
+                                        <option value="<%=service.getId()%>" selected><%=service.getServiceName()+" ("+service.getRealPrice()+")"%></option>
+                                    <%}else{%>
+                                        <option value="<%=service.getId()%>"><%=service.getServiceName()+" ("+service.getRealPrice()+")"%></option>
+                                    <%}
+                                }
+                            %>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="date">Date</label>
-                        <input type="date" id="date" name="date" required>
+                        <input type="date" id="date" name="date" required value="<%=date%>"  <%=edit?"disabled":""%>>
                     </div>
                     <div class="form-group">
                         <label for="time">Time</label>
-                        <select id="time" name="time" required>
-                            <option value="">Select a Time Slot</option>
+                        <select id="time" name="time" required  <%=edit?"disabled":""%>>
+                            <%
+                                for(int i = 0; i< GlobalConst.TIME_SLOT_LIST.size(); i++){
+                                    String slot = GlobalConst.TIME_SLOT_LIST.get(i);
+                                    if(i == TypeConverter.stringToInt(timeId)){%>
+                                        <option value="<%=i%>" selected><%=slot%></option>
+                                    <%}else{%>
+                                        <option value="<%=i%>"><%=slot%></option>
+                                    <%}
+                                }
+                            %>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="notes">Special Requests</label>
-                        <textarea id="notes" name="notes"></textarea>
+                        <textarea id="notes" name="notes" ><%=req%></textarea>
                     </div>
-                    <button type="submit" class="btn" id="book-now-btn">Confirm Booking</button>
+                    <div style="display: flex; justify-content: center;width: 100%;">
+                        <button type="submit" class="btn" id="book-now-btn"><%=edit?"Update Note":"Confirm Booking"%></button>
+                    </div>
+
                 </form>
             <%}%>
 
@@ -67,57 +140,6 @@
 </section>
 <jsp:include page="../root/footer.jsp"/>
 <script>
-    const serviceSelect = document.getElementById('service');
-    const params = new URLSearchParams(window.location.search);
-    const idFromUrl = parseInt(params.get('id'));
-    services.forEach(service => {
-        const option = document.createElement('option');
-        option.selected = service.id == idFromUrl;
-        option.value = service.id;
-        option.textContent = service.key+" (LKR. "+service.price.toLocaleString()+")";
-        serviceSelect.appendChild(option);
-    });
-    const select = document.getElementById('time');
-
-    // Start and end hours (24-hour format)
-    const startHour = 9; // 9 AM
-    const endHour = 19;  // 8 PM
-
-    for (let hour = startHour; hour < endHour; hour++) {
-        const nextHour = hour + 1;
-
-        // Format the time to 12-hour with AM/PM
-        const formatHour = (h) => {
-            const period = h >= 12 ? 'PM' : 'AM';
-            const hour12 = h % 12 === 0 ? 12 : h % 12;
-            return hour12+period;
-        };
-
-        const timeSlot = formatHour(hour)+" - "+formatHour(nextHour);
-        const option = document.createElement('option');
-        option.value = timeSlot;
-        option.textContent = timeSlot;
-        select.appendChild(option);
-    }
-
-    // Form submission
-    document.getElementById('appointment-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        // Get form values
-        const name = document.getElementById('name').value;
-        const service = document.getElementById('service').value;
-        const date = document.getElementById('date').value;
-        const time = document.getElementById('time').value;
-
-        // Simple validation
-        if (name && service && date && time) {
-            <%--alert(`Booking confirmed!\n\nName: ${name}\nService: ${service}\nDate: ${date}\nTime: ${time}`);--%>
-            this.reset();
-        } else {
-            alert('Please fill in all required fields');
-        }
-    });
 
     // Set minimum date to today
     document.getElementById('date').min = new Date().toISOString().split('T')[0];

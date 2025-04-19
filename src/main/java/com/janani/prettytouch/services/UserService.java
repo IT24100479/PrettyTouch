@@ -69,12 +69,17 @@ public class UserService implements Services{
     }
     @Override
     public List<Model> getAll() {
-        return allUsers;
+        return this.allUsers;
     }
     @Override
     public Model getById(int id) {
-        //ToDo find user from allUsers list and return
-        return allUsers.getFirst();
+        for (int i = 0; i < allUsers.size(); i++) {
+            UserModel user = (UserModel)allUsers.get(i);
+            if (id == user.getId()) {
+                return user;
+            }
+        }
+        return null;
     }
 
     @Override

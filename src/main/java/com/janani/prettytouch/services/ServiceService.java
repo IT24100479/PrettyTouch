@@ -61,11 +61,26 @@ public class ServiceService implements Services {
 
     @Override
     public List<Model> getAll() {
-        return List.of();
+        return this.allServices;
+    }
+
+    public List<Model> getAllForUser(int userId) {
+        List<Model> data = new ArrayList<>();
+        for (int i = 0; i < this.allServices.size(); i++) {
+            if(this.allServices.get(i).getCreatedBy() == userId){
+                data.add(this.allServices.get(i));
+            }
+        }
+        return data;
     }
 
     @Override
     public Model getById(int id) {
+        for (int i = 0; i < this.allServices.size(); i++) {
+            if(this.allServices.get(i).getId() == id){
+                return this.allServices.get(i);
+            }
+        }
         return null;
     }
 

@@ -1,16 +1,19 @@
-<%@ page import="com.janani.prettytouch.model.UserModel" %><%--
+<%@ page import="com.janani.prettytouch.model.UserModel" %>
+<%@ page import="com.janani.prettytouch.constVar.GlobalConst" %><%--
   Created by IntelliJ IDEA.
   User: jakli
   Date: 2025-04-05
   Time: 8:30 PM
   To change this template use File | Settings | File Templates.
 --%>
-
+<link rel="stylesheet" href="<%=request.getContextPath()+"/css/bootstrap/css/bootstrap.min.css"%>">
 <link rel="stylesheet" href="<%=request.getContextPath()+"/css/master.css"%>">
 <link rel="stylesheet" href="<%=request.getContextPath()+"/css/fontawesome/css/all.min.css"%>">
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="<%=request.getContextPath()+"/js/data/slide.js"%>"></script>
 <script src="<%=request.getContextPath()+"/js/jQuery/jquery-3.7.1.min.js"%>"></script>
+<script src="<%=request.getContextPath()+"/css/bootstrap/js/bootstrap.min.js"%>"></script>
 
 <%
     UserModel logUser = (UserModel)session.getAttribute("user");
@@ -30,12 +33,12 @@
                 <li><a href="<%=pathUrl+"#services"%>">Services</a></li>
 
                 <li><a href="<%=request.getContextPath()+"/appointment/createAppointment.jsp"%>" id="booking-link">Book Now</a></li>
-                <% if (logUser!=null && "admin".equalsIgnoreCase(logUser.getRole())) { %>
-                    <li><a href="#">Appointment</a></li>
+                <% if (logUser!=null && GlobalConst.USER_TYPE_ADMIN.equalsIgnoreCase(logUser.getRole())) { %>
+                    <li><a href="<%=request.getContextPath()+"/appointment/appointments.jsp"%>">Appointment</a></li>
                     <li><a href="#">User Manage</a></li>
                 <%}%>
-                <% if (logUser!=null && "user".equalsIgnoreCase(logUser.getRole())) { %>
-                    <li><a href="#">My Appointment</a></li>
+                <% if (logUser!=null && GlobalConst.USER_TYPE_USER.equalsIgnoreCase(logUser.getRole())) { %>
+                    <li><a href="<%=request.getContextPath()+"/appointment/appointments.jsp"%>">My Appointment</a></li>
                 <%}%>
                 <% if (logUser==null) { %>
                     <li><a href="#" id="login-btn">Login</a></li>
@@ -55,7 +58,7 @@
         <span class="close">&times;</span>
         <div class="login-form">
             <h2>Login to Your Account</h2>
-            <h3 id="loginerror" style="display: flex;justify-content: center;color: red;"></h3>
+            <h5 id="loginerror" style="display: flex;justify-content: center;color: red;"></h5>
             <form id="login-form">
                 <div class="form-group">
                     <label for="username">Username</label>

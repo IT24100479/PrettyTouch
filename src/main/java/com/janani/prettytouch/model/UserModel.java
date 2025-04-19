@@ -1,5 +1,7 @@
 package com.janani.prettytouch.model;
 
+import com.janani.prettytouch.util.TypeConverter;
+
 import java.time.LocalDate;
 
 public class UserModel extends Model {
@@ -29,6 +31,11 @@ public class UserModel extends Model {
     @Override
     public String[] getCSVLine() {
         return new String[]{String.valueOf(id), String.valueOf(createdBy), String.valueOf(createdAt), String.valueOf(status), String.valueOf(username), String.valueOf(password), String.valueOf(firstName), String.valueOf(lastName), String.valueOf(role), String.valueOf(phoneNumber), String.valueOf(dob)};
+    }
+
+    @Override
+    public boolean validate() {
+        return false;
     }
 
     public String getUsername() {
@@ -84,11 +91,6 @@ public class UserModel extends Model {
     }
 
     public void setDOB(String dob) {
-        try{
-            this.dob = LocalDate.parse(dob);
-        } catch (Exception e) {
-            e.printStackTrace();
-            this.dob=null;
-        }
+        this.dob = TypeConverter.stringToLocalDate(dob);
     }
 }

@@ -1,6 +1,7 @@
 package com.janani.prettytouch.model;
 
 import com.janani.prettytouch.services.AppointmentService;
+import com.janani.prettytouch.util.TypeConverter;
 
 public class PaymentModel extends Model {
     private int appointmentId;
@@ -23,6 +24,11 @@ public class PaymentModel extends Model {
         return new String[]{String.valueOf(id), String.valueOf(createdBy), String.valueOf(createdAt), String.valueOf(status), String.valueOf(appointmentId), String.valueOf(amount), String.valueOf(cash)};
     }
 
+    @Override
+    public boolean validate() {
+        return false;
+    }
+
     public int getAppointmentId() {
         return appointmentId;
     }
@@ -36,12 +42,7 @@ public class PaymentModel extends Model {
     }
 
     public void setAppointmentId(String appointmentId) {
-        try{
-            this.appointmentId = Integer.parseInt(appointmentId);
-        }catch (Exception e){
-            e.printStackTrace();
-            this.appointmentId = 0;
-        }
+        this.appointmentId = TypeConverter.stringToInt(appointmentId);
     }
 
     public double getAmount() {
@@ -49,12 +50,7 @@ public class PaymentModel extends Model {
     }
 
     public void setAmount(String amount) {
-        try{
-            this.amount = Double.parseDouble(amount);
-        }catch (Exception e){
-            e.printStackTrace();
-            this.amount = 0.0;
-        }
+        this.amount = TypeConverter.stringToDouble(amount);
     }
 
     public double getCash() {
@@ -62,11 +58,6 @@ public class PaymentModel extends Model {
     }
 
     public void setCash(String cash) {
-        try{
-            this.cash = Double.parseDouble(cash);
-        }catch (Exception e){
-            e.printStackTrace();
-            this.cash = 0.0;
-        }
+        this.amount= TypeConverter.stringToDouble(cash);
     }
 }

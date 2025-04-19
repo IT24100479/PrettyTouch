@@ -41,20 +41,37 @@ public class Queue {
         return false;
     }
 
+    private int findIndex(int id){
+        for(int i = 0; i < this.queueList.size(); i++){
+            if(this.queueList.get(i).getId() == id){
+                return i;
+            }
+        }
+        return -1;
+    }
+
     public boolean insert(Model item){
-        if (this.queueList.size() < this.size) {
+        int index = this.findIndex(item.getId());
+        if (index == -1 && this.queueList.size() < this.size) {
             this.queueList.add(item);
+            return true;
+        }else if (index != -1){
+            this.queueList.add(index, item);
             return true;
         }
         return false;
     }
 
     public boolean sortAndInsert(Model item){
-        if (this.queueList.size() < this.size) {
+        int index = this.findIndex(item.getId());
+        if (index == -1 && this.queueList.size() < this.size) {
             this.queueList.add(item);
             Model[] temp = this.queueList.toArray(Model[]::new);
             this.quickSort.quickSort(temp, 0, this.queueList.size() - 1);
             this.queueList =  new ArrayList<>(Arrays.asList(temp));
+            return true;
+        }else if (index != -1){
+            this.queueList.add(index, item);
             return true;
         }
         return false;
