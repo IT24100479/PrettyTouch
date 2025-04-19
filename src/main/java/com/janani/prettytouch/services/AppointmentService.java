@@ -109,14 +109,7 @@ public class AppointmentService implements Services {
 
             return appointments.get(dateKey).get(timeSlot).sortAndInsert(appointment);
         }else{
-            String dateKey = appointment.getDate().toString();
-            if (appointment.getId() !=0 && appointments.containsKey(dateKey)) {
-                String timeSlot = appointment.getTimeSlotId() + "";
-                if (appointments.get(dateKey).containsKey(timeSlot) && appointments.get(dateKey).get(timeSlot)!=null){
-                    appointments.get(dateKey).get(timeSlot).findAndRemove(appointment.getId());
-                }
-
-            }
+            this.removeAppointmentFromQueue(appointment);
             return true;
         }
     }
@@ -176,7 +169,16 @@ public class AppointmentService implements Services {
         }
         return false;
     }
+    private void removeAppointmentFromQueue(AppointmentModel appointmentModel) {
+        String dateKey = appointmentModel.getDate().toString();
+        if (appointmentModel.getId() !=0 && appointments.containsKey(dateKey)) {
+            String timeSlot = appointmentModel.getTimeSlotId() + "";
+            if (appointments.get(dateKey).containsKey(timeSlot) && appointments.get(dateKey).get(timeSlot)!=null){
+                appointments.get(dateKey).get(timeSlot).findAndRemove(appointmentModel.getId());
+            }
 
+        }
+    }
     @Override
     public boolean update(Model model) {
         AppointmentModel appointmentModel = (AppointmentModel) model;
@@ -184,10 +186,11 @@ public class AppointmentService implements Services {
         for (int i = 0; i < this.allAppointments.size(); i++) {
             if (this.allAppointments.get(i).getId() == appointmentModel.getId()) {
                 oldModel = (AppointmentModel) this.allAppointments.get(i);
-                if (this.appointments.containsKey(oldModel.getDate().toString()) &&
-                        this.appointments.get(oldModel.getDate().toString()).containsKey(oldModel.getTimeSlotId() + "")) {
-                    this.appointments.get(oldModel.getDate().toString()).get(oldModel.getTimeSlotId() + "").findAndRemove(oldModel.getId());
-                }
+//                if (this.appointments.containsKey(oldModel.getDate().toString()) &&
+//                        this.appointments.get(oldModel.getDate().toString()).containsKey(oldModel.getTimeSlotId() + "")) {
+//                    this.appointments.get(oldModel.getDate().toString()).get(oldModel.getTimeSlotId() + "").findAndRemove(oldModel.getId());
+//                }
+                this.removeAppointmentFromQueue(oldModel);
                 this.allAppointments.remove(i);
                 return this.add(appointmentModel);
             }

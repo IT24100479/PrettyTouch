@@ -1,13 +1,12 @@
-<%@ page import="com.janani.prettytouch.model.UserModel" %>
-<%@ page import="com.janani.prettytouch.model.Model" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.janani.prettytouch.constVar.GlobalConst" %>
 <%@ page import="com.janani.prettytouch.services.AppointmentService" %>
 <%@ page import="com.janani.prettytouch.util.TypeConverter" %>
-<%@ page import="com.janani.prettytouch.model.AppointmentModel" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.time.LocalDate" %>
-<%@ page import="com.janani.prettytouch.model.ServiceModel" %><%--
+<%@ page import="com.janani.prettytouch.model.*" %>
+<%@ page import="com.janani.prettytouch.services.PaymentService" %>
+<%@ page import="static jdk.internal.org.jline.utils.Colors.s" %><%--
   Created by IntelliJ IDEA.
   User: jakli
   Date: 2025-04-19
@@ -17,55 +16,49 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-  <title>Appointments</title>
+  <title>Payment</title>
   <link rel="stylesheet" href="<%=request.getContextPath()+"/css/DataTables/datatables.min.css"%>">
   <script src="<%=request.getContextPath()+"/css/DataTables/datatables.min.js"%>"></script>
   <%
     UserModel logUser = (UserModel)session.getAttribute("user");
-    String timeId = TypeConverter.replaceNull(request.getParameter("timeId"));
+    String timeId = TypeConverter.replaceNull(request.getParameter("time"));
     String date = TypeConverter.replaceNull(request.getParameter("date"));
-    if(logUser==null){
+    if(logUser==null || !GlobalConst.USER_TYPE_ADMIN.equalsIgnoreCase(logUser.getRole())){
       response.sendRedirect(request.getContextPath()+"/user/logout");
       return;
     }
-    List<Model> ap;
-    assert logUser != null;
-    String userRole = logUser.getRole();
-    if(GlobalConst.USER_TYPE_ADMIN.equalsIgnoreCase(logUser.getRole())){
-      ap = AppointmentService.getInstance().getAll();
-    }else{
-      ap = AppointmentService.getInstance().getAllAppointmentsByUserId(logUser.getId());
-    }
-    List<AppointmentModel> appointments = new ArrayList<>();
+    List<Model> pay = PaymentService.getInstance().getAll();
+
+    List<PaymentModel> payments = new ArrayList<>();
     if(TypeConverter.stringIsNotEmpty(date)){
-      for(int i=(ap.size()-1);i>=0;i--){
+      for(int i=(pay.size()-1);i>=0;i--){
         LocalDate d = TypeConverter.stringToLocalDate(date);
-        AppointmentModel a =(AppointmentModel) ap.get(i);
-        if(d!=null && d.equals(a.getDate())){
-          appointments.add(a);
+        PaymentModel p =(PaymentModel) pay.get(i);
+        if(d!=null && d.equals(p.getAppointment().getDate())){
+          payments.add(p);
         }
       }
     }else{
-      for(int i=ap.size()-1;i>=0;i--){
-        appointments.add((AppointmentModel) ap.get(i));
+      for(int i=pay.size()-1;i>=0;i--){
+        payments.add((PaymentModel) pay.get(i));
       }
     }
     if(TypeConverter.stringIsNotEmpty(timeId)){
-      List<AppointmentModel> temp = new ArrayList<>();
-      for(int i=0;i<appointments.size();i++){
-        if(TypeConverter.stringToInt(timeId)==appointments.get(i).getTimeSlotId()){
-          temp.add(appointments.get(i));
+      List<PaymentModel> temp = new ArrayList<>();
+      for(int i=0;i<payments.size();i++){
+        if(TypeConverter.stringToInt(timeId)==payments.get(i).getAppointment().getTimeSlotId()){
+          temp.add(payments.get(i));
         }
       }
-      appointments = temp;
+      payments = temp;
     }
-    List<AppointmentModel> temp2 = new ArrayList<>();
-    for(int i=0;i<appointments.size();i++){
-      if(!GlobalConst.APPOINTMENT_STATUS_TYPE.get(3).equalsIgnoreCase(appointments.get(i).getStatusForCsv())){
-        temp2.add(appointments.get(i));
+    List<PaymentModel> temp2 = new ArrayList<>();
+    for(int i=0;i<payments.size();i++){
+      if(payments.get(i).getStatus()){
+        temp2.add(payments.get(i));
       }
     }
-    appointments = temp2;
+    payments = temp2;
   %>
   <style>
     .allpage .container {
@@ -119,16 +112,16 @@
 <jsp:include page="../root/header.jsp"/>
 
 <section class="allpage">
-  <div id="appointments" class="container">
+  <div id="payment" class="container">
     <div class="innerContainer">
-      <h2 class="section-title">Appointments</h2>
+      <h2 class="section-title">Payment Report</h2>
       <form method="get">
         <div class="form-row justify-content-md-center">
           <div class="col-md-6">
             <input type="date" name="date" class="form-control" placeholder="Appointment Date" value="<%=date%>">
           </div>
           <div class="col-md-6">
-            <select id="timeId" class="form-control" name="timeId">
+            <select id="time" class="form-control" name="time">
               <option value="">Select a Time Slot</option>
               <%
                 for(int i = 0; i< GlobalConst.TIME_SLOT_LIST.size(); i++){
@@ -152,72 +145,44 @@
           <thead>
           <tr class="bg-info">
             <th scope="col">#</th>
-            <%if(GlobalConst.USER_TYPE_ADMIN.equalsIgnoreCase(userRole)){%>
+            <th scope="col">Appointment#</th>
             <th scope="col">Client</th>
             <th scope="col">Tel</th>
-            <%}%>
             <th scope="col">Service</th>
             <th scope="col">Price</th>
             <th scope="col">Date</th>
             <th scope="col">Time</th>
-            <th scope="col">Note</th>
-            <th scope="col">Status</th>
-            <th scope="col">Edit Note</th>
-            <th scope="col">Cancel</th>
-            <%if(GlobalConst.USER_TYPE_ADMIN.equalsIgnoreCase(userRole)){%>
+            <th scope="col">Amount</th>
+            <th scope="col">Cash</th>
+            <th scope="col">Balance</th>
+            <th scope="col">CreatedAt</th>
             <th scope="col">Remove</th>
-            <%}%>
           </tr>
           </thead>
           <tbody>
-          <%if(appointments.isEmpty()){%>
-          <tr>
-            <th colspan="<%=GlobalConst.USER_TYPE_ADMIN.equalsIgnoreCase(userRole)?"12":"9"%>" style="text-align: center">
-              No Appointments
-            </th>
-          </tr>
-          <%}else{
-            for(int i=0;i<appointments.size();i++){
-              AppointmentModel a = appointments.get(i);
-              boolean isActive = GlobalConst.APPOINTMENT_STATUS_TYPE.get(1).equalsIgnoreCase(a.getStatusForCsv());
+          <%if(!payments.isEmpty()){
+            for(int i=0;i<payments.size();i++){
+              PaymentModel p = payments.get(i);
+              AppointmentModel a = p.getAppointment();
               UserModel c = a.getUser();
               ServiceModel s = a.getService();
           %>
           <tr>
+            <th><%=p.getId()%></th>
             <th><%=a.getId()%></th>
-            <%if(GlobalConst.USER_TYPE_ADMIN.equalsIgnoreCase(userRole)){%>
             <td><%=c.getFirstName()+" "+c.getLastName()%></td>
             <td ><%=c.getPhoneNumber()%></td>
-            <%}%>
             <td><%=s.getServiceName()%></td>
             <td><%=s.getRealPrice()%></td>
             <td><%=a.getDate()%></td>
             <td><%=GlobalConst.TIME_SLOT_LIST.get(a.getTimeSlotId())%></td>
-            <td><%=a.getRequestData()%></td>
-            <td><%=a.getStatusForCsv()%></td>
+            <td><%=p.getAmount()%></td>
+            <td><%=p.getCash()%></td>
+            <td><%=p.getBalance()%></td>
+            <td><%=p.getCreatedAt()%></td>
             <td>
-              <%if(isActive){%>
-              <a href="<%=request.getContextPath()+"/appointment/createAppointment.jsp?edit=true&aid="+a.getId()%>" class="btn btn-warning">Edit</a>
-              <%}else{%>
-              <a href="" class="btn btn-warning disabled">Edit</a>
-              <%}%>
+              <a href="<%=request.getContextPath()+"/payment/remove?pid="+a.getId()%>" class="btn btn-danger">Remove</a>
             </td>
-            <td>
-              <%if(isActive){%>
-              <a href="<%=request.getContextPath()+"/appointment/cancel?aid="+a.getId()%>" class="btn btn-secondary">Cancel</a>
-              <%}else{%>
-              <a href="" class="btn btn-secondary disabled">Cancel</a>
-              <%}%>
-            </td>
-            <%if(GlobalConst.USER_TYPE_ADMIN.equalsIgnoreCase(userRole)){%>
-            <td>
-              <%if(isActive){%>
-              <a href="<%=request.getContextPath()+"/appointment/Remove?aid="+a.getId()%>" class="btn btn-danger">Remove</a>
-              <%}else{%>
-              <a href="" class="btn btn-danger disabled">Remove</a>
-              <%}%>
-            </td>
-            <%}%>
           </tr>
           <%}
           }%>
@@ -230,7 +195,11 @@
 </section>
 <jsp:include page="../root/footer.jsp"/>
 <script>
+
   new DataTable('#dataTable',{
+    language: {
+      emptyTable: "No Payments Available"
+    },
     dom: 'RBflrtip',
     order:[],
     buttons: [

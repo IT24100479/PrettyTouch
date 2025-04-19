@@ -170,13 +170,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <%if(appointments.isEmpty()){%>
-                <tr>
-                    <th colspan="<%=GlobalConst.USER_TYPE_ADMIN.equalsIgnoreCase(userRole)?"12":"9"%>" style="text-align: center">
-                        No Appointments
-                    </th>
-                </tr>
-                <%}else{
+                <%if(!appointments.isEmpty()){
                     for(int i=0;i<appointments.size();i++){
                         AppointmentModel a = appointments.get(i);
                         boolean isActive = GlobalConst.APPOINTMENT_STATUS_TYPE.get(1).equalsIgnoreCase(a.getStatusForCsv());
@@ -230,7 +224,11 @@
 </section>
 <jsp:include page="../root/footer.jsp"/>
 <script>
+
     new DataTable('#dataTable',{
+        language: {
+            emptyTable: "No Appointments Available"
+        },
         dom: 'RBflrtip',
         order:[],
         buttons: [
