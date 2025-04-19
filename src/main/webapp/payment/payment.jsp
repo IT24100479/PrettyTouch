@@ -6,7 +6,8 @@
 <%@ page import="java.time.LocalDate" %>
 <%@ page import="com.janani.prettytouch.model.*" %>
 <%@ page import="com.janani.prettytouch.services.PaymentService" %>
-<%@ page import="static jdk.internal.org.jline.utils.Colors.s" %><%--
+<%@ page import="static jdk.internal.org.jline.utils.Colors.s" %>
+<%@ page import="com.janani.prettytouch.util.Queue" %><%--
   Created by IntelliJ IDEA.
   User: jakli
   Date: 2025-04-19
@@ -27,38 +28,24 @@
       response.sendRedirect(request.getContextPath()+"/user/logout");
       return;
     }
-    List<Model> pay = PaymentService.getInstance().getAll();
+    if(TypeConverter.stringIsEmpty(date)){
+      date=TypeConverter.localDateToString(LocalDate.now());
+    }
+    if(TypeConverter.stringIsEmpty(timeId)){
+      timeId="0";
+    }
+    Queue queue = AppointmentService.getInstance().getQueue(date,timeId);
+    AppointmentModel appointment=null;
+    ServiceModel service = null;
+    UserModel client = null;
+    UserModel createdBy =null;
+    if(queue!=null && !queue.isEmpty()){
+      appointment = (AppointmentModel)queue.peekFront();
+      service=appointment.getService();
+      client=appointment.getUser();
+      createdBy=appointment.getCreatedByUser();
+    }
 
-    List<PaymentModel> payments = new ArrayList<>();
-    if(TypeConverter.stringIsNotEmpty(date)){
-      for(int i=(pay.size()-1);i>=0;i--){
-        LocalDate d = TypeConverter.stringToLocalDate(date);
-        PaymentModel p =(PaymentModel) pay.get(i);
-        if(d!=null && d.equals(p.getAppointment().getDate())){
-          payments.add(p);
-        }
-      }
-    }else{
-      for(int i=pay.size()-1;i>=0;i--){
-        payments.add((PaymentModel) pay.get(i));
-      }
-    }
-    if(TypeConverter.stringIsNotEmpty(timeId)){
-      List<PaymentModel> temp = new ArrayList<>();
-      for(int i=0;i<payments.size();i++){
-        if(TypeConverter.stringToInt(timeId)==payments.get(i).getAppointment().getTimeSlotId()){
-          temp.add(payments.get(i));
-        }
-      }
-      payments = temp;
-    }
-    List<PaymentModel> temp2 = new ArrayList<>();
-    for(int i=0;i<payments.size();i++){
-      if(payments.get(i).getStatus()){
-        temp2.add(payments.get(i));
-      }
-    }
-    payments = temp2;
   %>
   <style>
     .allpage .container {
@@ -106,6 +93,13 @@
       padding-bottom: 10px !important;
     }
 
+    .firstCapitalize{
+      text-transform: capitalize;
+    }
+    .col-md-4{
+      padding-top: 5px;
+    }
+
   </style>
 </head>
 <body>
@@ -114,14 +108,14 @@
 <section class="allpage">
   <div id="payment" class="container">
     <div class="innerContainer">
-      <h2 class="section-title">Payment Report</h2>
+      <h2 class="section-title">Payment</h2>
       <form method="get">
         <div class="form-row justify-content-md-center">
           <div class="col-md-6">
-            <input type="date" name="date" class="form-control" placeholder="Appointment Date" value="<%=date%>">
+            <input type="date" name="date" id="date" class="form-control" placeholder="Appointment Date" value="<%=date%>">
           </div>
           <div class="col-md-6">
-            <select id="time" class="form-control" name="time">
+            <select id="time" class="form-control" name="time" id="time">
               <option value="">Select a Time Slot</option>
               <%
                 for(int i = 0; i< GlobalConst.TIME_SLOT_LIST.size(); i++){
@@ -140,88 +134,155 @@
           </div>
         </div>
       </form>
-      <div style="margin-top: 10px;">
-        <table class="table table-striped table-hover" id="dataTable">
-          <thead>
-          <tr class="bg-info">
-            <th scope="col">#</th>
-            <th scope="col">Appointment#</th>
-            <th scope="col">Client</th>
-            <th scope="col">Tel</th>
-            <th scope="col">Service</th>
-            <th scope="col">Price</th>
-            <th scope="col">Date</th>
-            <th scope="col">Time</th>
-            <th scope="col">Amount</th>
-            <th scope="col">Cash</th>
-            <th scope="col">Balance</th>
-            <th scope="col">CreatedAt</th>
-            <th scope="col">Remove</th>
-          </tr>
-          </thead>
-          <tbody>
-          <%if(!payments.isEmpty()){
-            for(int i=0;i<payments.size();i++){
-              PaymentModel p = payments.get(i);
-              AppointmentModel a = p.getAppointment();
-              UserModel c = a.getUser();
-              ServiceModel s = a.getService();
-          %>
-          <tr>
-            <th><%=p.getId()%></th>
-            <th><%=a.getId()%></th>
-            <td><%=c.getFirstName()+" "+c.getLastName()%></td>
-            <td ><%=c.getPhoneNumber()%></td>
-            <td><%=s.getServiceName()%></td>
-            <td><%=s.getRealPrice()%></td>
-            <td><%=a.getDate()%></td>
-            <td><%=GlobalConst.TIME_SLOT_LIST.get(a.getTimeSlotId())%></td>
-            <td><%=p.getAmount()%></td>
-            <td><%=p.getCash()%></td>
-            <td><%=p.getBalance()%></td>
-            <td><%=p.getCreatedAt()%></td>
-            <td>
-              <a href="<%=request.getContextPath()+"/payment/remove?pid="+a.getId()%>" class="btn btn-danger">Remove</a>
-            </td>
-          </tr>
-          <%}
-          }%>
+      <div style="margin-top: 30px;">
+        <%if(appointment==null){%>
+        <h4 style="padding-top: 50px;text-align: center">No Appointment Available</h4>
+        <%}else{%>
+        <div class="card text-center">
+          <div class="card-header firstCapitalize">
+            <h5><%=service.getServiceName()+" (RS."+service.getRealPrice()+")"%></h5>
+          </div>
+          <div class="card-body firstCapitalize text-left">
+            <h5 class="card-title text-center"><%=client.getFirstName()+" "+ client.getLastName()%></h5>
 
-          </tbody>
-        </table>
+            <div class="row">
+              <div class="col-md-4">
+                <b>Client Id:&nbsp;</b><%=client.getId()%>
+              </div>
+              <div class="col-md-4">
+                <b>Client Tel:&nbsp;</b><%=client.getPhoneNumber()%>
+              </div>
+              <div class="col-md-4">
+                <b>Client Dob:&nbsp;</b><%=client.getDob()%>
+              </div>
+              <div class="col-md-4">
+                <b>Service Id:&nbsp;</b><%=service.getId()%>
+              </div>
+              <div class="col-md-4">
+                <b>Service Name:&nbsp;</b><%=service.getServiceName()%>
+              </div>
+              <div class="col-md-4">
+                <b>Service Real Price:&nbsp;</b>Rs.<%=service.getRealPrice()%>
+              </div>
+              <div class="col-md-4">
+                <b>Service Print Price:&nbsp;</b>Rs.<%=service.getPrintPrice()%>
+              </div>
+              <div class="col-md-4">
+                <b>Service Is Offer:&nbsp;</b><%=service.getIsOffer()%>
+              </div>
+              <div class="col-md-4">
+                <b>Appointment Id:&nbsp;</b><%=appointment.getId()%>
+              </div>
+              <div class="col-md-4">
+                <b>Appointment date:&nbsp;</b><%=appointment.getDate()%>
+              </div>
+              <div class="col-md-4">
+                <b>Appointment Time:&nbsp;</b><%=GlobalConst.TIME_SLOT_LIST.get(appointment.getTimeSlotId())%>
+              </div>
+              <div class="col-md-4">
+                <b>Appointment Status:&nbsp;</b><%=appointment.getStatusForCsv()%>
+              </div>
+              <div class="col-md-4">
+                <b>Created At:&nbsp;</b><%=appointment.getCreatedAt()%>
+              </div>
+              <div class="col-md-4">
+                <b>Created By:&nbsp;</b><%=createdBy.getFirstName()+" "+createdBy.getLastName()%>
+              </div>
+
+            </div>
+            <p class="card-text text-center" style="padding-top: 5px"><b>Note:&nbsp;</b><%=appointment.getRequestData()%></p>
+<%--            <a href="#" class="btn btn-primary">Go somewhere</a>--%>
+          </div>
+          <div class="card-footer alert-warning">
+            <div class="row">
+              <div class="col-md-12 alert alert-danger" role="alert" style="display: none;" id="error">
+
+              </div>
+            </div>
+            <div class="row text-left">
+              <div class="col-md-4">
+                <label for="cash">Cash</label>
+                <input type="text" oninput="calBal()" name="cash" id="cash" class="form-control" autocomplete="off">
+              </div>
+              <div class="col-md-4">
+                <label for="bal">Balance</label>
+                <input type="text" name="bal" id="bal" class="form-control" disabled autocomplete="off">
+              </div>
+              <div class="col-md-2">
+                <label for="compBtn">&nbsp;</label><br/>
+                <button type="button" class="btn btn-primary" id="compBtn" onclick="completed()">Complete And Next</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <%}%>
       </div>
     </div>
   </div>
 </section>
 <jsp:include page="../root/footer.jsp"/>
+
 <script>
+  function calBal(){
+    let cash = $('#cash').val();
+    let amount = <%=service!=null?service.getRealPrice():0.0%>;
+    // Remove all characters except digits and a single dot
+    cash = cash.replace(/[^\d.]/g, '');
 
-  new DataTable('#dataTable',{
-    language: {
-      emptyTable: "No Payments Available"
-    },
-    dom: 'RBflrtip',
-    order:[],
-    buttons: [
-      {
-        extend: 'colvis',
-        collectionLayout: 'fixed two-column'
-      },
-      'copyHtml5',
-      'excelHtml5',
-      'csvHtml5',
-      'pdfHtml5',
+    // Keep only the first dot (in case multiple were typed)
+    const parts = cash.split('.');
+    if (parts.length > 2) {
+      cash = parts[0] + '.' + parts[1];
+    }
 
+    // Trim decimal part to 2 digits
+    if (parts.length === 2) {
+      cash = parts[0] + '.' + parts[1].substring(0, 2);
+    }
+    $('#cash').val(cash);
+    if(cash==null||cash==0){
+      $('#bal').val("");
+    }else{
+      $('#bal').val((cash-amount).toFixed(2));
+    }
+  }
+  function completed() {
+    let cash = $('#cash').val();
+    let amount = <%=service!=null?service.getRealPrice():0.0%>;
+    if(cash==null||cash==0){
+      $("#error").html("Cash Value Required");
+      $("#error").show();
+    }else if(cash<amount){
+      $("#error").html("Cash Must Be Greater Than Or Equal To Amount");
+      $("#error").show();
+    }else{
+      $("#error").hide();
+      $.ajax({
+        url: '<%=request.getContextPath()+"/payment/pay"%>', // Sample API
+        type: 'POST',
+        data: {
+          cash:cash,
+          aid:<%=appointment!=null?appointment.getId():0%>
+        },
+        success: function(response) {
+          let msg = response.msg;
+          if(msg==undefined){
+            msg=JSON.parse(response).msg;
+          }
+          if(msg=="success"){
+            window.location.reload();
+          }else{
+            $("#error").html(msg);
+            $("#error").show();
+          }
+        },
+        error: function(xhr, status, error) {
+          console.log(JSON.stringify(error));
+        }
+      });
+    }
 
-    ],
-    autoFill: true,
-    "paging": true,
-    "scrollX": true,
-    "sScrollX": "100%",
-    "sScrollXInner": "100%",
-    select: true
-  });
+  }
 </script>
-
 </body>
 </html>

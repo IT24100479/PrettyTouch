@@ -21,7 +21,7 @@ public class Remove extends HttpServlet {
         UserModel user = (UserModel) session.getAttribute("user");
         if (user != null) {
             PaymentService paymentService = PaymentService.getInstance();
-            PaymentModel paymentModel = (PaymentModel) paymentService.getById(TypeConverter.stringToInt(req.getParameter("aid")));
+            PaymentModel paymentModel = (PaymentModel) paymentService.getById(TypeConverter.stringToInt(req.getParameter("pid")));
             if(paymentModel != null) {
                 paymentService.delete(paymentModel.getId());
             }

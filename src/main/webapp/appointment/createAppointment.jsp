@@ -72,7 +72,7 @@
 
                                     for(int i=0;i<users.size();i++){
                                         UserModel user = (UserModel) users.get(i);
-                                        if(GlobalConst.USER_TYPE_ADMIN.equalsIgnoreCase(user.getRole())){
+                                        if(GlobalConst.USER_TYPE_ADMIN.equalsIgnoreCase(user.getRole())||!user.getStatus()){
                                             continue;
                                         }
                                         if(user.getId()== TypeConverter.stringToInt(userId)){%>
@@ -95,7 +95,11 @@
                             <%
                                 List<Model> services = ServiceService.getInstance().getAll();
                                 for(int i=0;i<services.size();i++){
+
                                     ServiceModel service = (ServiceModel) services.get(i);
+                                    if(!service.getStatus()){
+                                        continue;
+                                    }
                                     if(service.getId()== TypeConverter.stringToInt(serviceId)){%>
                                         <option value="<%=service.getId()%>" selected><%=service.getServiceName()+" ("+service.getRealPrice()+")"%></option>
                                     <%}else{%>

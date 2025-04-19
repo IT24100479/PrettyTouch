@@ -145,7 +145,7 @@
                     <thead>
                     <tr class="bg-info">
                         <th scope="col">#</th>
-                        <th scope="col">Appointment#</th>
+                        <th scope="col">App..#</th>
                         <th scope="col">Client</th>
                         <th scope="col">Tel</th>
                         <th scope="col">Service</th>
@@ -169,7 +169,7 @@
                     %>
                     <tr>
                         <th><%=p.getId()%></th>
-                        <th><%=a.getId()%></th>
+                        <td><%=a.getId()%></td>
                         <td><%=c.getFirstName()+" "+c.getLastName()%></td>
                         <td ><%=c.getPhoneNumber()%></td>
                         <td><%=s.getServiceName()%></td>

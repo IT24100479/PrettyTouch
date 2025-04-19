@@ -234,5 +234,11 @@ public class AppointmentService implements Services {
         }
         return url;
     }
+    public Queue getQueue(String date,String timeSlotId) {
+        if(this.appointments.containsKey(date) && this.appointments.get(date).containsKey(timeSlotId)) {
+            return this.appointments.get(date).get(timeSlotId);
+        }
+        return null;
+    }
 
 }
