@@ -71,5 +71,10 @@ public class TypeConverter {
             return null;
         }
     }
+    public static String replaceNull(String a){
+        return a==null?"":a;
+    }
+
+
 
 }
