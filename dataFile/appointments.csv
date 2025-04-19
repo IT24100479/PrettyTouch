@@ -1,6 +1,9 @@
-id,createdBy,createdAt,status,serviceId,date,timeSlotId,requestData
-1,1,2025-04-18T11:42:28,1,1,2025-04-20,0,asdff
-2,1,2025-04-18T11:42:10,1,2,2025-04-20,0,sadcc
-3,1,2025-04-18T11:42:30,0,3,2025-04-20,0,dffvfv
-4,1,2025-04-18T11:42:31,1,3,2025-04-20,1,gtghfdsv
-5,1,2025-04-18T11:42:31,1,3,2025-04-21,1,gtghfdsv
+id,createdBy,createdAt,status,serviceId,date,timeSlotId,requestData,userId
+1,2,2025-04-18T11:42:28,Pending,1,2025-04-20,0,asdff,2
+2,3,2025-04-18T11:42:10,Pending,2,2025-04-20,0,sadcc,3
+3,3,2025-04-18T11:42:30,Complete,3,2025-04-20,0,dffvfv,3
+4,1,2025-04-18T11:42:31,Pending,3,2025-04-20,0,gtghfdsv,3
+5,1,2025-04-18T11:42:31,Pending,3,2025-04-21,1,gtghfdsv,3
+6,1,2025-04-18T11:42:10,Cancel,2,2025-04-20,1,sadcc,3
+7,1,2025-04-18T11:42:10,Deleted,2,2025-04-20,1,sadcc,3
+8,1,2025-04-18T11:42:31,Pending,3,2025-04-21,0,gtghfdsv,3

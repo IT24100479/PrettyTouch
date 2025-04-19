@@ -75,6 +75,48 @@ public class TypeConverter {
         return a==null?"":a;
     }
 
+    public static boolean ValidateInt(String a){
+        try{
+            Integer.parseInt(a);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    public static boolean ValidateDouble(String a){
+        try{
+            Double.parseDouble(a);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    public static boolean ValidateLocalDate(String a){
+        try{
+            LocalDate.parse(a);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+    public static boolean ValidateLocalDateTime(String a){
+        try{
+            LocalDateTime.parse(a);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+    public static boolean stringIsNotEmpty(String a){
+        return a!=null && !a.isEmpty();
+    }
+
+    public static boolean stringIsEmpty(String a){
+        return a==null || a.isEmpty();
+    }
+
 
 
 }

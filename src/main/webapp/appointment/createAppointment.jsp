@@ -27,6 +27,9 @@
         String timeId = TypeConverter.replaceNull(request.getParameter("timeId"));
         String req = TypeConverter.replaceNull(request.getParameter("req"));
         String appointmentId = TypeConverter.replaceNull(request.getParameter("aid"));
+        String error = TypeConverter.replaceNull(request.getParameter("error"));
+        boolean isError =TypeConverter.stringIsNotEmpty(error);
+        String actionUrl = request.getContextPath()+"/appointment/create";
         boolean edit = request.getParameter("edit")!=null;
     %>
 </head>
@@ -40,16 +43,24 @@
             <% if(logUser==null){%>
             <h3 style="display: flex;justify-content: center;">Please Log In To Book An Appointment</h3>
             <%}else{%>
-                <form class="booking-form" id="appointment-form" method="POST" action="">
-                    <% if (logUser!=null && "admin".equalsIgnoreCase(logUser.getRole())) { %>
+                <h3 id="error" style="display: flex;justify-content: center;color: red;">Selected Time Slot Is Full. Please Select Different Date Or Time Slot</h3>
+                <% if(isError){%>
+                    <h3 id="error" style="display: flex;justify-content: center;color: red;"><%=error%></h3>
+                <%}%>
+                <form class="booking-form" id="appointment-form" method="POST" action="<%=actionUrl%>">
+                    <% if (logUser!=null && GlobalConst.USER_TYPE_ADMIN.equalsIgnoreCase(logUser.getRole())) { %>
                         <div class="form-group">
                             <label for="client">Client Name</label>
                             <select id="client" name="client" required <%=edit?"disabled":""%>>
                                 <option value="">Select a user</option>
                                     <%
                                     List<Model> users = UserService.getInstance().getAll();
+
                                     for(int i=0;i<users.size();i++){
                                         UserModel user = (UserModel) users.get(i);
+                                        if(GlobalConst.USER_TYPE_ADMIN.equalsIgnoreCase(user.getRole())){
+                                            continue;
+                                        }
                                         if(user.getId()== TypeConverter.stringToInt(userId)){%>
                                             <option value="<%=user.getId()%>" selected><%=user.getFirstName()+" "+user.getLastName()%></option>
                                         <%}else{%>
@@ -119,23 +130,23 @@
 
 
     // Form submission
-    document.getElementById('appointment-form').addEventListener('submit', function(e) {
-        e.preventDefault();
+    <%--document.getElementById('appointment-form').addEventListener('submit', function(e) {--%>
+    <%--    e.preventDefault();--%>
 
-        // Get form values
-        const name = document.getElementById('name').value;
-        const service = document.getElementById('service').value;
-        const date = document.getElementById('date').value;
-        const time = document.getElementById('time').value;
+    <%--    // Get form values--%>
+    <%--    const name = document.getElementById('name').value;--%>
+    <%--    const service = document.getElementById('service').value;--%>
+    <%--    const date = document.getElementById('date').value;--%>
+    <%--    const time = document.getElementById('time').value;--%>
 
-        // Simple validation
-        if (name && service && date && time) {
-            <%--alert(`Booking confirmed!\n\nName: ${name}\nService: ${service}\nDate: ${date}\nTime: ${time}`);--%>
-            this.reset();
-        } else {
-            alert('Please fill in all required fields');
-        }
-    });
+    <%--    // Simple validation--%>
+    <%--    if (name && service && date && time) {--%>
+    <%--        &lt;%&ndash;alert(`Booking confirmed!\n\nName: ${name}\nService: ${service}\nDate: ${date}\nTime: ${time}`);&ndash;%&gt;--%>
+    <%--        this.reset();--%>
+    <%--    } else {--%>
+    <%--        alert('Please fill in all required fields');--%>
+    <%--    }--%>
+    <%--});--%>
 
     // Set minimum date to today
     document.getElementById('date').min = new Date().toISOString().split('T')[0];

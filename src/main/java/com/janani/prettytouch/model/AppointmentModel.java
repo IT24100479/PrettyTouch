@@ -11,8 +11,9 @@ public class AppointmentModel extends Model {
     private LocalDate date;
     private int timeSlotId;
     private String requestData;
+    private int userId;
 
-    public AppointmentModel(String id, String createdBy, String createdAt, String status, String serviceId, String date, String timeSlotId, String requestData) {
+    public AppointmentModel(String id, String createdBy, String createdAt, String status, String serviceId, String date, String timeSlotId, String requestData,String userId) {
         super(id, createdBy, createdAt, status);
         setServiceId(serviceId);
         setDate(date);
@@ -24,9 +25,22 @@ public class AppointmentModel extends Model {
         super();
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = TypeConverter.stringToInt(userId);
+    }
+
     @Override
     public String[] getCSVLine() {
         return new String[]{String.valueOf(id), String.valueOf(createdBy), String.valueOf(createdAt), String.valueOf(status), String.valueOf(serviceId), String.valueOf(date), String.valueOf(timeSlotId), String.valueOf(requestData)};
+    }
+
+    @Override
+    public boolean validate() {
+        return (this.serviceId != 0 && this.date != null && this.userId!=0);
     }
 
     public int getServiceId() {
@@ -64,5 +78,7 @@ public class AppointmentModel extends Model {
     public void setRequestData(String requestData) {
         this.requestData = requestData;
     }
+
+
 
 }

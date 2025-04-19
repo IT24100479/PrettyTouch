@@ -24,6 +24,11 @@ public class PaymentModel extends Model {
         return new String[]{String.valueOf(id), String.valueOf(createdBy), String.valueOf(createdAt), String.valueOf(status), String.valueOf(appointmentId), String.valueOf(amount), String.valueOf(cash)};
     }
 
+    @Override
+    public boolean validate() {
+        return false;
+    }
+
     public int getAppointmentId() {
         return appointmentId;
     }

@@ -33,6 +33,11 @@ public class UserModel extends Model {
         return new String[]{String.valueOf(id), String.valueOf(createdBy), String.valueOf(createdAt), String.valueOf(status), String.valueOf(username), String.valueOf(password), String.valueOf(firstName), String.valueOf(lastName), String.valueOf(role), String.valueOf(phoneNumber), String.valueOf(dob)};
     }
 
+    @Override
+    public boolean validate() {
+        return false;
+    }
+
     public String getUsername() {
         return username;
     }

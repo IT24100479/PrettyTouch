@@ -37,6 +37,11 @@ public class ServiceModel extends Model {
         return new String[]{String.valueOf(id), String.valueOf(createdBy), String.valueOf(createdAt), String.valueOf(status), String.valueOf(type), String.valueOf(serviceName), String.valueOf(description), String.valueOf(printPrice), String.valueOf(realPrice), String.valueOf(imageUrl)};
     }
 
+    @Override
+    public boolean validate() {
+        return false;
+    }
+
     public String getType() {
         return type;
     }

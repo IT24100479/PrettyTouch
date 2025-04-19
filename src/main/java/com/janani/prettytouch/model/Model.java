@@ -63,4 +63,6 @@ public abstract class Model {
     }
 
     public abstract String[] getCSVLine();
+
+    public abstract boolean validate();
 }

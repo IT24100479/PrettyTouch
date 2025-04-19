@@ -1,4 +1,5 @@
-<%@ page import="com.janani.prettytouch.model.UserModel" %><%--
+<%@ page import="com.janani.prettytouch.model.UserModel" %>
+<%@ page import="com.janani.prettytouch.constVar.GlobalConst" %><%--
   Created by IntelliJ IDEA.
   User: jakli
   Date: 2025-04-05
@@ -30,11 +31,11 @@
                 <li><a href="<%=pathUrl+"#services"%>">Services</a></li>
 
                 <li><a href="<%=request.getContextPath()+"/appointment/createAppointment.jsp"%>" id="booking-link">Book Now</a></li>
-                <% if (logUser!=null && "admin".equalsIgnoreCase(logUser.getRole())) { %>
+                <% if (logUser!=null && GlobalConst.USER_TYPE_ADMIN.equalsIgnoreCase(logUser.getRole())) { %>
                     <li><a href="#">Appointment</a></li>
                     <li><a href="#">User Manage</a></li>
                 <%}%>
-                <% if (logUser!=null && "user".equalsIgnoreCase(logUser.getRole())) { %>
+                <% if (logUser!=null && GlobalConst.USER_TYPE_USER.equalsIgnoreCase(logUser.getRole())) { %>
                     <li><a href="#">My Appointment</a></li>
                 <%}%>
                 <% if (logUser==null) { %>

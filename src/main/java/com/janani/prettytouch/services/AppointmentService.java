@@ -48,10 +48,10 @@ public class AppointmentService implements Services {
 
             for (int i = 0; i < allData.size(); i++) {
                 String[] row = allData.get(i);
-                if (row.length >= 8) {
+                if (row.length >= 9) {
                     AppointmentModel appointment = new AppointmentModel(row[0],
                             row[1], row[2], row[3], row[4], row[5],
-                            row[6], row[7]
+                            row[6], row[7],row[8]
                     );
                     allAppointments.add(appointment);
                     this.addToQueue(appointment);
