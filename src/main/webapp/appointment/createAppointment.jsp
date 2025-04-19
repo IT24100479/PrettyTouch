@@ -5,7 +5,9 @@
 <%@ page import="com.janani.prettytouch.util.TypeConverter" %>
 <%@ page import="com.janani.prettytouch.services.ServiceService" %>
 <%@ page import="com.janani.prettytouch.model.ServiceModel" %>
-<%@ page import="com.janani.prettytouch.constVar.GlobalConst" %><%--
+<%@ page import="com.janani.prettytouch.constVar.GlobalConst" %>
+<%@ page import="com.janani.prettytouch.model.AppointmentModel" %>
+<%@ page import="com.janani.prettytouch.services.AppointmentService" %><%--
   Created by IntelliJ IDEA.
   User: jakli
   Date: 2025-04-05
@@ -27,6 +29,16 @@
         String timeId = TypeConverter.replaceNull(request.getParameter("time"));
         String req = TypeConverter.replaceNull(request.getParameter("req"));
         String appointmentId = TypeConverter.replaceNull(request.getParameter("aid"));
+        if(TypeConverter.stringIsNotEmpty(appointmentId)){
+            AppointmentModel appointmentModel = (AppointmentModel) AppointmentService.getInstance().getById(TypeConverter.stringToInt(appointmentId));
+            if(appointmentModel!=null){
+                userId=TypeConverter.intToString(appointmentModel.getUserId());
+                serviceId=TypeConverter.intToString(appointmentModel.getServiceId());
+                date=TypeConverter.localDateToString(appointmentModel.getDate());
+                timeId=TypeConverter.intToString(appointmentModel.getTimeSlotId());
+                req=TypeConverter.replaceNull(appointmentModel.getRequestData());
+            }
+        }
         String error = TypeConverter.replaceNull(request.getParameter("error"));
         boolean isError =TypeConverter.stringIsNotEmpty(error);
         String actionUrl = request.getContextPath()+"/appointment/create";
@@ -99,7 +111,6 @@
                     <div class="form-group">
                         <label for="time">Time</label>
                         <select id="time" name="time" required  <%=edit?"disabled":""%>>
-                            <option value="">Select a Time Slot</option>
                             <%
                                 for(int i = 0; i< GlobalConst.TIME_SLOT_LIST.size(); i++){
                                     String slot = GlobalConst.TIME_SLOT_LIST.get(i);
@@ -128,26 +139,6 @@
 </section>
 <jsp:include page="../root/footer.jsp"/>
 <script>
-
-
-    // Form submission
-    <%--document.getElementById('appointment-form').addEventListener('submit', function(e) {--%>
-    <%--    e.preventDefault();--%>
-
-    <%--    // Get form values--%>
-    <%--    const name = document.getElementById('name').value;--%>
-    <%--    const service = document.getElementById('service').value;--%>
-    <%--    const date = document.getElementById('date').value;--%>
-    <%--    const time = document.getElementById('time').value;--%>
-
-    <%--    // Simple validation--%>
-    <%--    if (name && service && date && time) {--%>
-    <%--        &lt;%&ndash;alert(`Booking confirmed!\n\nName: ${name}\nService: ${service}\nDate: ${date}\nTime: ${time}`);&ndash;%&gt;--%>
-    <%--        this.reset();--%>
-    <%--    } else {--%>
-    <%--        alert('Please fill in all required fields');--%>
-    <%--    }--%>
-    <%--});--%>
 
     // Set minimum date to today
     document.getElementById('date').min = new Date().toISOString().split('T')[0];

@@ -9,6 +9,37 @@
 <html>
 <head>
   <title>PrettyTouch</title>
+  <style>
+    .btn {
+      display: inline-block;
+      background: var(--primary-color);
+      color: #fff;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+    }
+
+    .btn:hover {
+      background: #ff5252;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+    }
+
+    .btn-secondary {
+      background: var(--secondary-color);
+      box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+    }
+
+    .btn-secondary:hover {
+      background: #3dbeb6;
+      box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
+    }
+  </style>
 </head>
 <body>
 <jsp:include page="root/header.jsp"/>

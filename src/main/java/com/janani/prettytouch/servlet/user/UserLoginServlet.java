@@ -16,7 +16,7 @@ import java.io.IOException;
 public class UserLoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        AppointmentService.getInstance().readAll();
+        
         resp.setContentType("application/json");
         if (req.getParameter("username") != null && req.getParameter("password") != null) {
             UserModel user = UserService.getInstance().checkLogin(

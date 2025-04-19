@@ -34,11 +34,11 @@
 
                 <li><a href="<%=request.getContextPath()+"/appointment/createAppointment.jsp"%>" id="booking-link">Book Now</a></li>
                 <% if (logUser!=null && GlobalConst.USER_TYPE_ADMIN.equalsIgnoreCase(logUser.getRole())) { %>
-                    <li><a href="#">Appointment</a></li>
+                    <li><a href="<%=request.getContextPath()+"/appointment/appointments.jsp"%>">Appointment</a></li>
                     <li><a href="#">User Manage</a></li>
                 <%}%>
                 <% if (logUser!=null && GlobalConst.USER_TYPE_USER.equalsIgnoreCase(logUser.getRole())) { %>
-                    <li><a href="#">My Appointment</a></li>
+                    <li><a href="<%=request.getContextPath()+"/appointment/appointments.jsp"%>">My Appointment</a></li>
                 <%}%>
                 <% if (logUser==null) { %>
                     <li><a href="#" id="login-btn">Login</a></li>

@@ -12,6 +12,7 @@ import com.opencsv.CSVWriter;
 
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -59,7 +60,6 @@ public class AppointmentService implements Services {
                 }
             }
             csvReader.close();
-            print();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -95,6 +95,7 @@ public class AppointmentService implements Services {
     }
 
     private boolean addToQueue(AppointmentModel appointment) {
+
         if (GlobalConst.APPOINTMENT_STATUS_TYPE.get(1).equalsIgnoreCase(appointment.getStatusForCsv())) {
             String dateKey = appointment.getDate().toString();
             if (!appointments.containsKey(dateKey)) {
@@ -106,8 +107,17 @@ public class AppointmentService implements Services {
             }
 
             return appointments.get(dateKey).get(timeSlot).sortAndInsert(appointment);
+        }else{
+            String dateKey = appointment.getDate().toString();
+            if (appointment.getId() !=0 && appointments.containsKey(dateKey)) {
+                String timeSlot = appointment.getTimeSlotId() + "";
+                if (appointments.get(dateKey).containsKey(timeSlot) && appointments.get(dateKey).get(timeSlot)!=null){
+                    appointments.get(dateKey).get(timeSlot).findAndRemove(appointment.getId());
+                }
+
+            }
+            return true;
         }
-        return false;
     }
 
     @Override
@@ -127,20 +137,36 @@ public class AppointmentService implements Services {
         return false;
     }
 
+    private void checkOverDue(){
+        List<AppointmentModel> overDueAppointments = new ArrayList<>();
+        for (int i = 0; i < this.allAppointments.size(); i++) {
+            AppointmentModel appointmentModel = (AppointmentModel) this.allAppointments.get(i);
+            if(GlobalConst.APPOINTMENT_STATUS_TYPE.get(1).equalsIgnoreCase(appointmentModel.getStatusForCsv())
+                    &&(appointmentModel.getDate()==null || LocalDate.now().isAfter(appointmentModel.getDate()))){
+                appointmentModel.setStatus(GlobalConst.APPOINTMENT_STATUS_TYPE.get(4));
+                overDueAppointments.add(appointmentModel);
+            }
+        }
+        for(int i = 0; i < overDueAppointments.size(); i++){
+            this.update(overDueAppointments.get(i));
+        }
+    }
+
     @Override
     public boolean add(Model model) {
+        this.checkOverDue();
         AppointmentModel appointmentModel = (AppointmentModel) model;
         if (appointmentModel.getCreatedAt() == null || appointmentModel.getCreatedAt().toString().isEmpty()) {
             appointmentModel.setCreatedAt(LocalDateTime.now().toString());
         }
-        if (this.addToQueue(appointmentModel)) {
-            if(appointmentModel.getId()==0){
-                int id = 1;
-                if(!allAppointments.isEmpty()){
-                    id = allAppointments.getLast().getId()+1;
-                }
-                appointmentModel.setId(id+"");
+        if(appointmentModel.getId()==0){
+            int id = 1;
+            if(!allAppointments.isEmpty()){
+                id = allAppointments.getLast().getId()+1;
             }
+            appointmentModel.setId(id+"");
+        }
+        if (this.addToQueue(appointmentModel)) {
             allAppointments.add(appointmentModel);
             Model[] temp = this.allAppointments.toArray(Model[]::new);
             this.quickSort.quickSort(temp, 0, this.allAppointments.size() - 1);
@@ -178,6 +204,17 @@ public class AppointmentService implements Services {
             }
         }
         return false;
+    }
+
+    public List<Model> getAllAppointmentsByUserId(int userId) {
+        List<Model> ap = new ArrayList<>();
+        for (int i = 0; i < this.allAppointments.size(); i++) {
+            AppointmentModel appointmentModel = (AppointmentModel) this.allAppointments.get(i);
+            if (appointmentModel.getUserId() == userId) {
+                ap.add(appointmentModel);
+            }
+        }
+        return ap;
     }
 
 }

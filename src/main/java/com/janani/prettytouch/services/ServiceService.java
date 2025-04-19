@@ -76,6 +76,11 @@ public class ServiceService implements Services {
 
     @Override
     public Model getById(int id) {
+        for (int i = 0; i < this.allServices.size(); i++) {
+            if(this.allServices.get(i).getId() == id){
+                return this.allServices.get(i);
+            }
+        }
         return null;
     }
 

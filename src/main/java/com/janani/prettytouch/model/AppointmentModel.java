@@ -2,6 +2,7 @@ package com.janani.prettytouch.model;
 
 
 import com.janani.prettytouch.services.ServiceService;
+import com.janani.prettytouch.services.UserService;
 import com.janani.prettytouch.util.TypeConverter;
 
 import java.time.LocalDate;
@@ -28,6 +29,10 @@ public class AppointmentModel extends Model {
 
     public int getUserId() {
         return userId;
+    }
+
+    public UserModel getUser(){
+        return (UserModel) UserService.getInstance().getById(this.userId);
     }
 
     public void setUserId(String userId) {
