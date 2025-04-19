@@ -6,12 +6,14 @@
   Time: 8:30 PM
   To change this template use File | Settings | File Templates.
 --%>
-
+<link rel="stylesheet" href="<%=request.getContextPath()+"/css/bootstrap/css/bootstrap.min.css"%>">
 <link rel="stylesheet" href="<%=request.getContextPath()+"/css/master.css"%>">
 <link rel="stylesheet" href="<%=request.getContextPath()+"/css/fontawesome/css/all.min.css"%>">
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="<%=request.getContextPath()+"/js/data/slide.js"%>"></script>
 <script src="<%=request.getContextPath()+"/js/jQuery/jquery-3.7.1.min.js"%>"></script>
+<script src="<%=request.getContextPath()+"/css/bootstrap/js/bootstrap.min.js"%>"></script>
 
 <%
     UserModel logUser = (UserModel)session.getAttribute("user");
@@ -56,7 +58,7 @@
         <span class="close">&times;</span>
         <div class="login-form">
             <h2>Login to Your Account</h2>
-            <h3 id="loginerror" style="display: flex;justify-content: center;color: red;"></h3>
+            <h5 id="loginerror" style="display: flex;justify-content: center;color: red;"></h5>
             <form id="login-form">
                 <div class="form-group">
                     <label for="username">Username</label>
