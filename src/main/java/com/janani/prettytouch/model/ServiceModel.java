@@ -1,5 +1,7 @@
 package com.janani.prettytouch.model;
 
+import com.janani.prettytouch.util.TypeConverter;
+
 public class ServiceModel extends Model {
     private String type;
     private String serviceName;
@@ -64,12 +66,7 @@ public class ServiceModel extends Model {
     }
 
     public void setPrintPrice(String printPrice) {
-        try {
-            this.printPrice = Double.parseDouble(printPrice);
-        } catch (Exception e) {
-            e.printStackTrace();
-            this.printPrice = 0.0;
-        }
+        this.printPrice = TypeConverter.stringToDouble(printPrice);
     }
 
     public double getRealPrice() {
@@ -77,12 +74,7 @@ public class ServiceModel extends Model {
     }
 
     public void setRealPrice(String realPrice) {
-        try {
-            this.realPrice = Double.parseDouble(realPrice);
-        } catch (Exception e) {
-            e.printStackTrace();
-            this.realPrice = 0.0;
-        }
+        this.realPrice = TypeConverter.stringToDouble(realPrice);
     }
 
 

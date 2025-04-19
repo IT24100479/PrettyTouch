@@ -1,5 +1,7 @@
 package com.janani.prettytouch.model;
 
+import com.janani.prettytouch.util.TypeConverter;
+
 public class FeedbackModel extends Model {
     private int rating;
     private String comment;
@@ -24,12 +26,7 @@ public class FeedbackModel extends Model {
     }
 
     public void setRating(String rating) {
-        try{
-            this.rating = Integer.parseInt(rating);
-        }catch (Exception e){
-            e.printStackTrace();
-            this.rating = 0;
-        }
+        this.rating = TypeConverter.stringToInt(rating);
     }
 
     public String getComment() {

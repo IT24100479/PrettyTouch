@@ -1,6 +1,7 @@
 package com.janani.prettytouch.model;
 
 import com.janani.prettytouch.services.UserService;
+import com.janani.prettytouch.util.TypeConverter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -26,12 +27,7 @@ public abstract class Model {
     }
 
     public void setId(String id) {
-        try{
-            this.id = Integer.parseInt(id);
-        }catch (Exception e){
-            e.printStackTrace();
-            this.id = 0;
-        }
+        this.id = TypeConverter.stringToInt(id);
     }
 
     public int getCreatedBy() {
@@ -43,12 +39,7 @@ public abstract class Model {
     }
 
     public void setCreatedBy(String createdBy) {
-        try{
-            this.createdBy = Integer.parseInt(createdBy);
-        }catch (Exception e){
-            e.printStackTrace();
-            this.createdBy = 0;
-        }
+        this.createdBy = TypeConverter.stringToInt(createdBy);
     }
 
     public LocalDateTime getCreatedAt() {
@@ -56,12 +47,7 @@ public abstract class Model {
     }
 
     public void setCreatedAt(String createdAt) {
-        try{
-            this.createdAt = LocalDateTime.parse(createdAt);
-        } catch (Exception e) {
-            e.printStackTrace();
-            this.createdAt=null;
-        }
+        this.createdAt = TypeConverter.stringToLocalDateTime(createdAt);
     }
 
     public boolean getStatus() {

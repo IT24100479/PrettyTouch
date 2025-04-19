@@ -2,6 +2,7 @@ package com.janani.prettytouch.model;
 
 
 import com.janani.prettytouch.services.ServiceService;
+import com.janani.prettytouch.util.TypeConverter;
 
 import java.time.LocalDate;
 
@@ -37,12 +38,7 @@ public class AppointmentModel extends Model {
     }
 
     public void setServiceId(String serviceId) {
-        try {
-            this.serviceId = Integer.parseInt(serviceId);
-        } catch (Exception e) {
-            e.printStackTrace();
-            this.serviceId = 0;
-        }
+        this.serviceId = TypeConverter.stringToInt(serviceId);
     }
 
     public LocalDate getDate() {
@@ -50,12 +46,7 @@ public class AppointmentModel extends Model {
     }
 
     public void setDate(String date) {
-        try {
-            this.date = LocalDate.parse(date);
-        } catch (Exception e) {
-            e.printStackTrace();
-            this.date = null;
-        }
+        this.date = TypeConverter.stringToLocalDate(date);
     }
 
     public int getTimeSlotId() {
@@ -63,12 +54,7 @@ public class AppointmentModel extends Model {
     }
 
     public void setTimeSlotId(String timeSlotId) {
-        try {
-            this.timeSlotId = Integer.parseInt(timeSlotId);
-        } catch (Exception e) {
-            e.printStackTrace();
-            this.timeSlotId = 0;
-        }
+        this.timeSlotId = TypeConverter.stringToInt(timeSlotId);
     }
 
     public String getRequestData() {

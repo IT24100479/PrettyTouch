@@ -1,5 +1,7 @@
 package com.janani.prettytouch.model;
 
+import com.janani.prettytouch.util.TypeConverter;
+
 import java.time.LocalDate;
 
 public class UserModel extends Model {
@@ -84,11 +86,6 @@ public class UserModel extends Model {
     }
 
     public void setDOB(String dob) {
-        try{
-            this.dob = LocalDate.parse(dob);
-        } catch (Exception e) {
-            e.printStackTrace();
-            this.dob=null;
-        }
+        this.dob = TypeConverter.stringToLocalDate(dob);
     }
 }
