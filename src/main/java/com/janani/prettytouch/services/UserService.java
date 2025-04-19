@@ -69,7 +69,7 @@ public class UserService implements Services{
     }
     @Override
     public List<Model> getAll() {
-        return allUsers;
+        return this.allUsers;
     }
     @Override
     public Model getById(int id) {
