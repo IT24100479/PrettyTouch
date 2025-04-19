@@ -9,8 +9,9 @@ public class ServiceModel extends Model {
     private double printPrice;
     private double realPrice;
     private String imageUrl;
+    private String isOffer;
 
-    public ServiceModel(String id, String createdBy, String createdAt, String status, String type, String serviceName, String description, String printPrice, String realPrice, String imageUrl) {
+    public ServiceModel(String id, String createdBy, String createdAt, String status, String type, String serviceName, String description, String printPrice, String realPrice, String imageUrl,String isOffer) {
         super(id, createdBy, createdAt, status);
         this.type = type;
         this.serviceName = serviceName;
@@ -18,6 +19,15 @@ public class ServiceModel extends Model {
         setPrintPrice(printPrice);
         setRealPrice(realPrice);
         this.imageUrl = imageUrl;
+        this.isOffer = isOffer;
+    }
+
+    public boolean getIsOffer() {
+        return "1".equals(isOffer);
+    }
+
+    public void setIsOffer(String isOffer) {
+        this.isOffer = isOffer;
     }
 
     public String getImageUrl() {
@@ -34,7 +44,7 @@ public class ServiceModel extends Model {
 
     @Override
     public String[] getCSVLine() {
-        return new String[]{String.valueOf(id), String.valueOf(createdBy), String.valueOf(createdAt), String.valueOf(status), String.valueOf(type), String.valueOf(serviceName), String.valueOf(description), String.valueOf(printPrice), String.valueOf(realPrice), String.valueOf(imageUrl)};
+        return new String[]{String.valueOf(id), String.valueOf(createdBy), String.valueOf(createdAt), String.valueOf(status), String.valueOf(type), String.valueOf(serviceName), String.valueOf(description), String.valueOf(printPrice), String.valueOf(realPrice), String.valueOf(imageUrl),String.valueOf(isOffer)};
     }
 
     @Override

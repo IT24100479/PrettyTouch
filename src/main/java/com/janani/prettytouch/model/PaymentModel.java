@@ -58,6 +58,6 @@ public class PaymentModel extends Model {
     }
 
     public void setCash(String cash) {
-        this.amount= TypeConverter.stringToDouble(cash);
+        this.cash= TypeConverter.stringToDouble(cash);
     }
 }

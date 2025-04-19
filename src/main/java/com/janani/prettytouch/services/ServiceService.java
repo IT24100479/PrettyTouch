@@ -42,10 +42,10 @@ public class ServiceService implements Services {
 
             for (int i = 0; i < allData.size(); i++) {
                 String[] row = allData.get(i);
-                if (row.length >= 10) {
+                if (row.length >= 11) {
                     ServiceModel service = new ServiceModel(row[0],
                             row[1],row[2],row[3],row[4],row[5],
-                            row[6],row[7],row[8],row[9]
+                            row[6],row[7],row[8],row[9],row[10]
                     );
                     allServices.add(service);
                 }
