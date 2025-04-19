@@ -59,6 +59,7 @@ public class AppointmentService implements Services {
                 }
             }
             csvReader.close();
+            print();
         } catch (Exception e) {
             e.printStackTrace();
         }

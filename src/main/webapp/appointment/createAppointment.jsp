@@ -24,7 +24,7 @@
         String userId = TypeConverter.replaceNull(request.getParameter("uid"));
         String serviceId = TypeConverter.replaceNull(request.getParameter("id"));
         String date = TypeConverter.replaceNull(request.getParameter("date"));
-        String timeId = TypeConverter.replaceNull(request.getParameter("timeId"));
+        String timeId = TypeConverter.replaceNull(request.getParameter("time"));
         String req = TypeConverter.replaceNull(request.getParameter("req"));
         String appointmentId = TypeConverter.replaceNull(request.getParameter("aid"));
         String error = TypeConverter.replaceNull(request.getParameter("error"));
@@ -43,9 +43,10 @@
             <% if(logUser==null){%>
             <h3 style="display: flex;justify-content: center;">Please Log In To Book An Appointment</h3>
             <%}else{%>
-                <h3 id="error" style="display: flex;justify-content: center;color: red;">Selected Time Slot Is Full. Please Select Different Date Or Time Slot</h3>
                 <% if(isError){%>
-                    <h3 id="error" style="display: flex;justify-content: center;color: red;"><%=error%></h3>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Error!</strong> <%=error%>
+                    </div>
                 <%}%>
                 <form class="booking-form" id="appointment-form" method="POST" action="<%=actionUrl%>">
                     <% if (logUser!=null && GlobalConst.USER_TYPE_ADMIN.equalsIgnoreCase(logUser.getRole())) { %>
@@ -71,7 +72,7 @@
                             </select>
                         </div>
                     <%}else{%>
-                    <input type="hidden" name="client" value="<%=logUser.getUsername()%>"/>
+                    <input type="hidden" name="client" value="<%=logUser.getId()%>"/>
                     <%}%>
                     <input type="hidden" name="appointmentId" value="<%=appointmentId%>"/>
                     <div class="form-group">

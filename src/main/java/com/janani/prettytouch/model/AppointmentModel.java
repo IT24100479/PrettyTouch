@@ -18,6 +18,7 @@ public class AppointmentModel extends Model {
         setServiceId(serviceId);
         setDate(date);
         setTimeSlotId(timeSlotId);
+        setUserId(userId);
         this.requestData = requestData;
     }
 
@@ -35,7 +36,7 @@ public class AppointmentModel extends Model {
 
     @Override
     public String[] getCSVLine() {
-        return new String[]{String.valueOf(id), String.valueOf(createdBy), String.valueOf(createdAt), String.valueOf(status), String.valueOf(serviceId), String.valueOf(date), String.valueOf(timeSlotId), String.valueOf(requestData)};
+        return new String[]{String.valueOf(id), String.valueOf(createdBy), String.valueOf(createdAt), String.valueOf(status), String.valueOf(serviceId), String.valueOf(date), String.valueOf(timeSlotId), String.valueOf(requestData),String.valueOf(userId)};
     }
 
     @Override

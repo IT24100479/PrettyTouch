@@ -83,7 +83,7 @@
     slideDiv.innerHTML="<div class='slide-content'>"+
             "<h1>"+slide.title+"</h1>"+
             "<p>"+slide.description+"</p>"+
-            "<a href='<%=request.getContextPath()+"/createAppointment.jsp"%>' class='btn'>"+slide.buttonText+"</a>"+
+            "<a href='<%=request.getContextPath()+"/appointment/createAppointment.jsp"%>' class='btn'>"+slide.buttonText+"</a>"+
             "</div>";
     homeSection.appendChild(slideDiv);
     startSlideshow();

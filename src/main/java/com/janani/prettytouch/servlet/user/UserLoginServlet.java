@@ -1,6 +1,7 @@
 package com.janani.prettytouch.servlet.user;
 
 import com.janani.prettytouch.model.UserModel;
+import com.janani.prettytouch.services.AppointmentService;
 import com.janani.prettytouch.services.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -15,6 +16,7 @@ import java.io.IOException;
 public class UserLoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        AppointmentService.getInstance().readAll();
         resp.setContentType("application/json");
         if (req.getParameter("username") != null && req.getParameter("password") != null) {
             UserModel user = UserService.getInstance().checkLogin(
