@@ -6,6 +6,7 @@ import com.janani.prettytouch.model.AppointmentModel;
 import com.janani.prettytouch.model.Model;
 import com.janani.prettytouch.util.Queue;
 import com.janani.prettytouch.util.QuickSort;
+import com.janani.prettytouch.util.TypeConverter;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.CSVWriter;
@@ -215,6 +216,20 @@ public class AppointmentService implements Services {
             }
         }
         return ap;
+    }
+    public String createReturnUrl(String base,String path,AppointmentModel appointmentModel,String error){
+        String url = base+path;
+        if(appointmentModel!=null){
+            url+="?uid="+appointmentModel.getUserId();
+            url+="&id="+appointmentModel.getServiceId();
+            url+="&date="+appointmentModel.getDate();
+            url+="&time="+appointmentModel.getTimeSlotId();
+            url+="&req="+appointmentModel.getRequestData();
+        }
+        if(TypeConverter.stringIsNotEmpty(error)){
+            url+=(appointmentModel!=null?"&error=":"?error=")+error;
+        }
+        return url;
     }
 
 }

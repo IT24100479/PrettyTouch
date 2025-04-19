@@ -41,8 +41,9 @@
         }
         String error = TypeConverter.replaceNull(request.getParameter("error"));
         boolean isError =TypeConverter.stringIsNotEmpty(error);
-        String actionUrl = request.getContextPath()+"/appointment/create";
+
         boolean edit = request.getParameter("edit")!=null;
+        String actionUrl = request.getContextPath()+"/appointment/"+(edit?"updateNote":"create");
     %>
 </head>
 <body>
@@ -86,7 +87,7 @@
                     <%}else{%>
                     <input type="hidden" name="client" value="<%=logUser.getId()%>"/>
                     <%}%>
-                    <input type="hidden" name="appointmentId" value="<%=appointmentId%>"/>
+                    <input type="hidden" name="aid" value="<%=appointmentId%>"/>
                     <div class="form-group">
                         <label for="service">Service</label>
                         <select id="service" name="service" required  <%=edit?"disabled":""%>>
@@ -128,7 +129,7 @@
                         <textarea id="notes" name="notes" ><%=req%></textarea>
                     </div>
                     <div style="display: flex; justify-content: center;width: 100%;">
-                        <button type="submit" class="btn" id="book-now-btn">Confirm Booking</button>
+                        <button type="submit" class="btn" id="book-now-btn"><%=edit?"Update Note":"Confirm Booking"%></button>
                     </div>
 
                 </form>

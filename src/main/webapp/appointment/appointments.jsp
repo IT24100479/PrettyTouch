@@ -22,10 +22,11 @@
     <script src="<%=request.getContextPath()+"/css/DataTables/datatables.min.js"%>"></script>
     <%
         UserModel logUser = (UserModel)session.getAttribute("user");
-        String timeId = TypeConverter.replaceNull(request.getParameter("timeId"));
+        String timeId = TypeConverter.replaceNull(request.getParameter("time"));
         String date = TypeConverter.replaceNull(request.getParameter("date"));
         if(logUser==null){
             response.sendRedirect(request.getContextPath()+"/user/logout");
+            return;
         }
         List<Model> ap;
         assert logUser != null;
@@ -127,7 +128,7 @@
                     <input type="date" name="date" class="form-control" placeholder="Appointment Date" value="<%=date%>">
                 </div>
                 <div class="col-md-6">
-                    <select id="timeId" class="form-control" name="timeId">
+                    <select id="time" class="form-control" name="time">
                         <option value="">Select a Time Slot</option>
                         <%
                             for(int i = 0; i< GlobalConst.TIME_SLOT_LIST.size(); i++){
@@ -211,7 +212,7 @@
                     <%if(GlobalConst.USER_TYPE_ADMIN.equalsIgnoreCase(userRole)){%>
                     <td>
                         <%if(isActive){%>
-                        <a href="<%=request.getContextPath()+"/appointment/Remove?aid="+a.getId()%>" class="btn btn-danger">Remove</a>
+                        <a href="<%=request.getContextPath()+"/appointment/remove?aid="+a.getId()%>" class="btn btn-danger">Remove</a>
                         <%}else{%>
                         <a href="" class="btn btn-danger disabled">Remove</a>
                         <%}%>

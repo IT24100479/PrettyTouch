@@ -26,6 +26,7 @@
     String date = TypeConverter.replaceNull(request.getParameter("date"));
     if(logUser==null){
       response.sendRedirect(request.getContextPath()+"/user/logout");
+      return;
     }
     List<Model> ap;
     assert logUser != null;
