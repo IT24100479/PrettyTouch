@@ -2,6 +2,7 @@ package com.janani.prettytouch.util;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class TypeConverter {
     public static String intToString(int a){
@@ -115,6 +116,14 @@ public class TypeConverter {
 
     public static boolean stringIsEmpty(String a){
         return a==null || a.isEmpty();
+    }
+
+    public static String formatLocalDateTime(LocalDateTime a){
+        try{
+            return a.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        }catch (Exception e){
+            return "";
+        }
     }
 
 

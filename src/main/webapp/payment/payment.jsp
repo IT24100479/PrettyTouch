@@ -109,13 +109,14 @@
   <div id="payment" class="container">
     <div class="innerContainer">
       <h2 class="section-title">Payment</h2>
-      <form method="get">
+      <form method="get" id="form">
         <div class="form-row justify-content-md-center">
+<%--          <div class="col-md-6">--%>
+<%--            <input type="date" name="date" id="date" class="form-control" placeholder="Appointment Date" value="<%=date%>">--%>
+<%--          </div>--%>
           <div class="col-md-6">
-            <input type="date" name="date" id="date" class="form-control" placeholder="Appointment Date" value="<%=date%>">
-          </div>
-          <div class="col-md-6">
-            <select id="time" class="form-control" name="time" id="time">
+            <input type="hidden" name="date" id="date" value="<%=date%>">
+            <select id="time" class="form-control" name="time" id="time" onchange="timeslotChange()">
               <option value="">Select a Time Slot</option>
               <%
                 for(int i = 0; i< GlobalConst.TIME_SLOT_LIST.size(); i++){
@@ -129,9 +130,9 @@
               %>
             </select>
           </div>
-          <div class="col-md-4">
-            <input type="submit" class="form-control btn2" value="Search" style="margin-top: 10px;">
-          </div>
+<%--          <div class="col-md-4">--%>
+<%--            <input type="submit" class="form-control btn2" value="Search" style="margin-top: 10px;">--%>
+<%--          </div>--%>
         </div>
       </form>
       <div style="margin-top: 30px;">
@@ -183,7 +184,7 @@
                 <b>Appointment Status:&nbsp;</b><%=appointment.getStatusForCsv()%>
               </div>
               <div class="col-md-4">
-                <b>Created At:&nbsp;</b><%=appointment.getCreatedAt()%>
+                <b>Created At:&nbsp;</b><%=TypeConverter.formatLocalDateTime(appointment.getCreatedAt())%>
               </div>
               <div class="col-md-4">
                 <b>Created By:&nbsp;</b><%=createdBy.getFirstName()+" "+createdBy.getLastName()%>
@@ -223,6 +224,10 @@
 <jsp:include page="../root/footer.jsp"/>
 
 <script>
+  function timeslotChange(){
+    $('#form').submit();
+  }
+
   function calBal(){
     let cash = $('#cash').val();
     let amount = <%=service!=null?service.getRealPrice():0.0%>;
