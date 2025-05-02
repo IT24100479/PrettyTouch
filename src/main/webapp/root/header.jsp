@@ -81,44 +81,13 @@
                 </div>
                 <button type="submit" class="btn login-btn">Login</button>
                 <div class="signup-link">
-                    Don't have an account? <a href="#" id="signup-link">Sign Up</a>
+                    Don't have an account? <a href="<%=request.getContextPath()+"/user/signUp.jsp"%>" id="signup-link">Sign Up</a>
                 </div>
             </form>
         </div>
     </div>
 </div>
-<!-- Signup Modal -->
-<div id="signup-modal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <div class="login-form">
-            <h2>Create Your Account</h2>
-            <form id="signup-form">
-                <div class="form-group">
-                    <label for="signup-username">Username</label>
-                    <input type="text" id="signup-username" name="username" required>
-                </div>
-                <div class="form-group">
-                    <label for="dob">Date of Birth</label>
-                    <input type="Date" id="dob" name="dob" required>
-                </div>
-                <div class="form-group">
-                    <label for="signup-email">Email</label>
-                    <input type="email" id="signup-email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="signup-phone">Telephone Number</label>
-                    <input type="tel" id="signup-phone" name="phone" required>
-                </div>
-                <div class="form-group">
-                    <label for="signup-password">Password</label>
-                    <input type="password" id="signup-password" name="password" required>
-                </div>
-                <button type="submit" class="btn login-btn">Save</button>
-            </form>
-        </div>
-    </div>
-</div>
+
 <script>
     // Mobile Menu Toggle
     const mobileMenuBtn = document.getElementById('mobile-menu');
@@ -161,47 +130,7 @@
             loginModal.style.display = 'none';
         }
     });
-    // Signup Modal
-    const signupModal = document.getElementById('signup-modal');
-    const signupLink = document.getElementById('signup-link');
-    const closeSignup = signupModal.querySelector('.close');
 
-    signupLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        loginModal.style.display = 'none';
-        signupModal.style.display = 'block';
-    });
-
-    closeSignup.addEventListener('click', () => {
-        signupModal.style.display = 'none';
-    });
-
-    window.addEventListener('click', (e) => {
-        if (e.target === signupModal) {
-            signupModal.style.display = 'none';
-        }
-    })
-    // Signup Form Submission
-    const signupForm = document.getElementById('signup-form');
-
-    signupForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const username = document.getElementById('signup-username').value;
-        const age = document.getElementById('signup-age').value;
-        const email = document.getElementById('signup-email').value;
-        const phone = document.getElementById('signup-phone').value;
-        const password = document.getElementById('signup-password').value;
-
-        // Simple validation
-        if (username && age && email && phone && password) {
-            alert('Account created successfully! Please login with your credentials.');
-            signupModal.style.display = 'none';
-            signupForm.reset();
-            loginModal.style.display = 'block';
-        } else {
-            alert('Please fill in all fields');
-        }
-    });
     // Login Form Submission
     const loginForm = document.getElementById('login-form');
 

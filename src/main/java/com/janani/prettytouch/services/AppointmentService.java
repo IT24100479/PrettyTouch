@@ -150,16 +150,7 @@ public class AppointmentService implements Services {
     public boolean add(Model model) {
         this.checkOverDue();
         AppointmentModel appointmentModel = (AppointmentModel) model;
-        if (appointmentModel.getCreatedAt() == null || appointmentModel.getCreatedAt().toString().isEmpty()) {
-            appointmentModel.setCreatedAt(LocalDateTime.now().toString());
-        }
-        if(appointmentModel.getId()==0){
-            int id = 1;
-            if(!allAppointments.isEmpty()){
-                id = allAppointments.getLast().getId()+1;
-            }
-            appointmentModel.setId(id+"");
-        }
+        appointmentModel.checkCreatedAtAndID(allAppointments);
         if (this.addToQueue(appointmentModel)) {
             allAppointments.add(appointmentModel);
             Model[] temp = this.allAppointments.toArray(Model[]::new);

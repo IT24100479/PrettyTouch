@@ -271,9 +271,6 @@
         },
         success: function(response) {
           let msg = response.msg;
-          if(msg==undefined){
-            msg=JSON.parse(response).msg;
-          }
           if(msg=="success"){
             window.location.reload();
           }else{
