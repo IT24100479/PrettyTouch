@@ -22,6 +22,7 @@ public class Pay extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(true);
         UserModel user = (UserModel) session.getAttribute("user");
+        resp.setContentType("application/json");
         if (user != null && GlobalConst.USER_TYPE_ADMIN.equalsIgnoreCase(user.getRole())) {
             PaymentService paymentService = PaymentService.getInstance();
             AppointmentService appointmentService = AppointmentService.getInstance();
