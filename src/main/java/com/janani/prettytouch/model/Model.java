@@ -5,6 +5,7 @@ import com.janani.prettytouch.util.TypeConverter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public abstract class Model {
     protected int id;
@@ -48,6 +49,19 @@ public abstract class Model {
 
     public void setCreatedAt(String createdAt) {
         this.createdAt = TypeConverter.stringToLocalDateTime(createdAt);
+    }
+
+    public void checkCreatedAtAndID(List<Model> list){
+        if (this.getCreatedAt() == null || this.getCreatedAt().toString().isEmpty()) {
+            this.setCreatedAt(LocalDateTime.now().toString());
+        }
+        if(this.getId()==0){
+            int id = 1;
+            if(!list.isEmpty()){
+                id = list.getLast().getId()+1;
+            }
+            this.setId(id+"");
+        }
     }
 
     public boolean getStatus() {

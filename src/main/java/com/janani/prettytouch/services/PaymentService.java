@@ -81,17 +81,7 @@ public class PaymentService implements Services{
     @Override
     public boolean add(Model model) {
         PaymentModel paymentModel = (PaymentModel) model;
-        if (paymentModel.getCreatedAt() == null || paymentModel.getCreatedAt().toString().isEmpty()) {
-            paymentModel.setCreatedAt(LocalDateTime.now().toString());
-        }
-        if(paymentModel.getId()==0){
-            int id = 1;
-            if(!allPayments.isEmpty()){
-                id = allPayments.getLast().getId()+1;
-            }
-            paymentModel.setId(id+"");
-        }
-
+        paymentModel.checkCreatedAtAndID(allPayments);
         allPayments.add(paymentModel);
         Model[] temp = this.allPayments.toArray(Model[]::new);
         this.quickSort.quickSort(temp, 0, this.allPayments.size() - 1);
