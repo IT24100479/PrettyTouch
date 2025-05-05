@@ -25,9 +25,11 @@ public class ServiceModel extends Model {
     public boolean getIsOffer() {
         return "1".equals(isOffer);
     }
+    public String getIsOfferCsv(){ return isOffer; }
 
     public void setIsOffer(String isOffer) {
         this.isOffer = isOffer;
+
     }
 
     public String getImageUrl() {
