@@ -64,7 +64,11 @@ public class ServiceModel extends Model {
 
     @Override
     public boolean validate() {
-        return false;
+        return !(TypeConverter.stringIsEmpty(this.description) ||
+                TypeConverter.stringIsEmpty(this.serviceName)||
+                TypeConverter.stringIsEmpty(this.isOffer)||
+                (!this.getIsOffer() && TypeConverter.stringIsEmpty(this.imageUrl)));
+
     }
 
     public String getType() {
