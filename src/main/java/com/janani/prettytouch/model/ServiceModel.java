@@ -42,6 +42,13 @@ public class ServiceModel extends Model {
         return imageUrl;
     }
 
+    public String getImageUrlShort() {
+        if(TypeConverter.stringIsNotEmpty(imageUrl) && imageUrl.length()>20) {
+            return imageUrl.substring(0, 20)+"...";
+        }
+        return imageUrl;
+    }
+
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
