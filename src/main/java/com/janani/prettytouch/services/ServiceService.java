@@ -104,7 +104,13 @@ public class ServiceService implements Services {
 
     @Override
     public boolean add(Model model) {
-        return false;
+        ServiceModel serviceModel = (ServiceModel) model;
+        serviceModel.checkCreatedAtAndID(allServices);
+        allServices.add(serviceModel);
+        Model[] temp = this.allServices.toArray(Model[]::new);
+        this.quickSort.quickSort(temp, 0, this.allServices.size() - 1);
+        this.allServices =  new ArrayList<>(Arrays.asList(temp));
+        return this.updateFile();
     }
 
     @Override
