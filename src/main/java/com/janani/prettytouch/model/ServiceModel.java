@@ -75,9 +75,6 @@ public class ServiceModel extends Model {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
 
     public String getServiceName() {
         return serviceName;
