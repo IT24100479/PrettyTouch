@@ -1,6 +1,7 @@
 package com.janani.prettytouch.model;
 
 import com.janani.prettytouch.services.AppointmentService;
+import com.janani.prettytouch.services.ServiceService;
 import com.janani.prettytouch.util.TypeConverter;
 
 public class FeedbackModel extends Model {
@@ -26,6 +27,9 @@ public class FeedbackModel extends Model {
         AppointmentId = TypeConverter.stringToInt(appointmentId);
     }
 
+    public  ServiceModel getService(){
+        return (ServiceModel) ServiceService.getInstance().getById(this.getAppointmentId());
+    }
     @Override
     public String[] getCSVLine() {
         return new String[]{String.valueOf(id), String.valueOf(createdBy), String.valueOf(createdAt), String.valueOf(status), String.valueOf(rating), String.valueOf(comment)};
