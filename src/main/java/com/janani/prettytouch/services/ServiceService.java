@@ -75,11 +75,18 @@ public class ServiceService implements Services {
         return this.allServices;
     }
 
-    public List<Model> getAllForUser(int userId) {
-        List<Model> data = new ArrayList<>();
+    public List<ServiceModel> getServiceWithFilter(boolean withService, boolean withOffer) {
+        List<ServiceModel> data = new ArrayList<>();
         for (int i = 0; i < this.allServices.size(); i++) {
-            if(this.allServices.get(i).getCreatedBy() == userId){
-                data.add(this.allServices.get(i));
+            ServiceModel model = (ServiceModel) this.allServices.get(i);
+            if (Boolean.FALSE.equals(model.getStatus())) {
+                continue;
+            }
+            if (Boolean.FALSE.equals(model.getIsOffer()) && withService) {
+                data.add(model);
+            }
+            if (Boolean.TRUE.equals(model.getIsOffer()) && withOffer) {
+                data.add(model);
             }
         }
         return data;
