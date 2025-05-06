@@ -12,6 +12,7 @@ public class UserModel extends Model {
     private String role;
     private String phoneNumber;
     private LocalDate dob;
+    private String email;
 
     public UserModel(String id, String createdBy, String createdAt, String status, String username, String password, String firstName, String lastName, String role, String phoneNumber, String dob) {
         super(id, createdBy, createdAt, status);
