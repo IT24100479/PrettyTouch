@@ -126,6 +126,12 @@ public class ServiceService implements Services {
 
     @Override
     public boolean delete(int id) {
+        for (int i = 0; i < this.allServices.size(); i++) {
+            if (this.allServices.get(i).getId() == id) {
+                this.allServices.get(i).setStatus("0");
+                return this.update(this.allServices.get(i));
+            }
+        }
         return false;
     }
 
