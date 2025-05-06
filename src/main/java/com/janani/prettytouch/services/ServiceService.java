@@ -115,6 +115,12 @@ public class ServiceService implements Services {
 
     @Override
     public boolean update(Model model) {
+        for (int i = 0; i < this.allServices.size(); i++) {
+            if (this.allServices.get(i).getId() == model.getId()) {
+                this.allServices.remove(i);
+                return this.add(model);
+            }
+        }
         return false;
     }
 
