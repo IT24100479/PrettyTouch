@@ -55,19 +55,17 @@ public class ServiceService implements Services {
                 String[] row = allData.get(i);
                 if (row.length >= 11) {
                     ServiceModel service = new ServiceModel(row[0],
-                            row[1],row[2],row[3],row[4],row[5],
-                            row[6],row[7],row[8],row[9],row[10]
+                            row[1], row[2], row[3], row[4], row[5],
+                            row[6], row[7], row[8], row[9], row[10]
                     );
                     allServices.add(service);
                 }
             }
             csvReader.close();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 
 
     @Override
@@ -95,7 +93,7 @@ public class ServiceService implements Services {
     @Override
     public Model getById(int id) {
         for (int i = 0; i < this.allServices.size(); i++) {
-            if(this.allServices.get(i).getId() == id){
+            if (this.allServices.get(i).getId() == id) {
                 return this.allServices.get(i);
             }
         }
@@ -109,7 +107,7 @@ public class ServiceService implements Services {
         allServices.add(serviceModel);
         Model[] temp = this.allServices.toArray(Model[]::new);
         this.quickSort.quickSort(temp, 0, this.allServices.size() - 1);
-        this.allServices =  new ArrayList<>(Arrays.asList(temp));
+        this.allServices = new ArrayList<>(Arrays.asList(temp));
         return this.updateFile();
     }
 
@@ -135,7 +133,7 @@ public class ServiceService implements Services {
         return false;
     }
 
-    public boolean  isDuplicate(ServiceModel serviceModel) {
+    public boolean isDuplicate(ServiceModel serviceModel) {
         for (int i = 0; i < this.allServices.size(); i++) {
             ServiceModel model = (ServiceModel) this.allServices.get(i);
             if (model.getServiceName().equals(serviceModel.getServiceName()) && model.getStatus()) {
@@ -147,6 +145,19 @@ public class ServiceService implements Services {
 
     @Override
     public boolean updateFile() {
-        return true;
+        String filePath = FIleConst.FILE_PATH + FIleConst.SERVICE_FILE;
+        try {
+            CSVWriter writer = new CSVWriter(new FileWriter(filePath));
+            writer.writeNext(FIleConst.SERVICE_HEADERS);
+            for (int i = 0; i < this.allServices.size(); i++) {
+                writer.writeNext(this.allServices.get(i).getCSVLine());
+            }
+            writer.close();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
+
 }
