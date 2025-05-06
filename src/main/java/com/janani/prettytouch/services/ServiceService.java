@@ -135,6 +135,16 @@ public class ServiceService implements Services {
         return false;
     }
 
+    public boolean  isDuplicate(ServiceModel serviceModel) {
+        for (int i = 0; i < this.allServices.size(); i++) {
+            ServiceModel model = (ServiceModel) this.allServices.get(i);
+            if (model.getServiceName().equals(serviceModel.getServiceName()) && model.getStatus()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public boolean updateFile() {
         return true;
