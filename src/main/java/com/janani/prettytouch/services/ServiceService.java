@@ -159,5 +159,22 @@ public class ServiceService implements Services {
         }
         return false;
     }
+    public String createReturnUrl(String base, String path, ServiceModel model, String error){
+        String url = base+path;
+        if(model!=null){
+            url+="?sid="+model.getId();
+            url+="&sName="+model.getServiceName();
+            url+="&isOffer="+model.getIsOfferCsv();
+            url+="&pPrice="+model.getPrintPrice();
+            url+="&rPrice="+model.getRealPrice();
+            url+="&imgUrl="+model.getImageUrl();
+            url+="&description="+model.getDescription();
+
+        }
+        if(TypeConverter.stringIsNotEmpty(error)){
+            url+=(model!=null?"&error=":"?error=")+error;
+        }
+        return url;
+    }
 
 }
