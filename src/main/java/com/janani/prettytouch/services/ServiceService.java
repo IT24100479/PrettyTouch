@@ -3,6 +3,7 @@ package com.janani.prettytouch.services;
 import com.janani.prettytouch.constVar.FIleConst;
 import com.janani.prettytouch.model.Model;
 import com.janani.prettytouch.model.ServiceModel;
+import com.janani.prettytouch.util.QuickSort;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 
@@ -14,10 +15,13 @@ public class ServiceService implements Services {
 
     private List<Model> allServices;
     private static ServiceService service;
+    private final QuickSort quickSort;
 
     private ServiceService() {
+        this.quickSort = new QuickSort();
         this.readAll();
     }
+
     public static ServiceService getInstance() {
         if (service == null) {
             service = new ServiceService();
