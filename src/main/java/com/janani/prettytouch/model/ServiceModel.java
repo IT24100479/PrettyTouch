@@ -75,7 +75,6 @@ public class ServiceModel extends Model {
         return type;
     }
 
-
     public String getServiceName() {
         return serviceName;
     }
