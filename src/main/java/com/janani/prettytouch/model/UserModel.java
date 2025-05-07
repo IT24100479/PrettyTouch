@@ -25,6 +25,7 @@ public class UserModel extends Model {
         setDOB(dob);
     }
 
+
     public UserModel() {
         super();
     }
