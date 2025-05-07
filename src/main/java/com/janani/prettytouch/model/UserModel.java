@@ -14,7 +14,7 @@ public class UserModel extends Model {
     private LocalDate dob;
     private String email;
 
-    public UserModel(String id, String createdBy, String createdAt, String status, String username, String password, String firstName, String lastName, String role, String phoneNumber, String dob) {
+    public UserModel(String id, String createdBy, String createdAt, String status, String username, String password, String firstName, String lastName, String role, String phoneNumber, String dob , String email) {
         super(id, createdBy, createdAt, status);
         this.username = username;
         this.password = password;
@@ -22,6 +22,7 @@ public class UserModel extends Model {
         this.lastName = lastName;
         this.role = role;
         this.phoneNumber = phoneNumber;
+        this.email = email;
         setDOB(dob);
     }
 
