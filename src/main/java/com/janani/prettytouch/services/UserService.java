@@ -153,5 +153,22 @@ public class UserService implements Services{
         }
         return false;
     }
+    public String createReturnUrl(String base, String path, UserModel model, String error){
+        String url = base+path;
+        if(model!=null){
+            url+="?uid="+model.getId();
+            url+="&uName="+model.getUsername();
+            url+="&fName="+model.getFirstName();
+            url+="&lName="+model.getLastName();
+            url+="&role="+model.getRole();
+            url+="&pNumber="+model.getPhoneNumber();
+            url+="&email="+model.getEmail();
+            url+="&dob="+model.getDob();
 
+        }
+        if(TypeConverter.stringIsNotEmpty(error)){
+            url+=(model!=null?"&error=":"?error=")+error;
+        }
+        return url;
+    }
 }
