@@ -14,7 +14,6 @@
   <h2>Leave Your Feedback</h2>
   <form action ="FeedbackServelet" method="post">
       Appointment ID:<input type="text" name="AppointmentId"/><br><br>
-
       Rating (1-5): <input type="number" name="rating" min="1" max="5" /><br/><br/>
       Comment:<br/>
       <textarea name="comment" rows="5" cols="30"></textarea></br></br>
