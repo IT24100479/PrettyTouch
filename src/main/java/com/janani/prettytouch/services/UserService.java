@@ -105,7 +105,13 @@ public class UserService implements Services{
     @Override
     public boolean update(Model user) {
         //ToDo find user from allUsers list and update data same time it need to update data in csv file
-        return true;
+        for(int i =0;i<this.allUsers.size();i++){
+            if(this.allUsers.get(i).getId()== user.getId()){
+                this.allUsers.remove(i);
+                return this.add(user);
+            }
+        }
+        return false;
     }
     @Override
     public boolean delete(int id) {
