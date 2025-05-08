@@ -28,7 +28,7 @@ public class FeedbackModel extends Model {
     }
 
     public  ServiceModel getService(){
-        return (ServiceModel) ServiceService.getInstance().getById(this.getAppointmentId());
+        return  (ServiceModel) ServiceService.getInstance().getById(this.getAppointmentId());
     }
 
     @Override
@@ -38,7 +38,7 @@ public class FeedbackModel extends Model {
 
     @Override
     public boolean validate() {
-        return false;
+        return AppointmentId != 0;
     }
 
     public int getRating() {
