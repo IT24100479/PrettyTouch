@@ -11,15 +11,20 @@ import com.opencsv.CSVReaderBuilder;
 import com.opencsv.CSVWriter;
 
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
 
 public class UserService implements Services{
     private List<Model> allUsers;
     private static UserService userService;
+    private final QuickSort quickSort;
 
     private UserService() {
         this.readAll();
+        this.quickSort = new QuickSort();
     }
     public static UserService getInstance() {
         if (userService == null) {
