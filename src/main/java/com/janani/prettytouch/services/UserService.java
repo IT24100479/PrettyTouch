@@ -142,5 +142,16 @@ public class UserService implements Services{
         return false;
 
     }
+    public boolean isDuplicate(UserModel userModel){
+        for (int i = 0; i < this.allUsers.size(); i++) {
+            UserModel model = (UserModel) this.allUsers.get(i);
+            if(model.getStatus() && model.getId()!=userModel.getId() && (model.getUsername().equalsIgnoreCase(userModel.getUsername())
+                    || model.getEmail().equalsIgnoreCase(userModel.getEmail())
+                    || model.getPhoneNumber().equals(userModel.getPhoneNumber()))) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }
