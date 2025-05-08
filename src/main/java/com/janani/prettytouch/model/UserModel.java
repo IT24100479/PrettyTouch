@@ -33,12 +33,18 @@ public class UserModel extends Model {
 
     @Override
     public String[] getCSVLine() {
-        return new String[]{String.valueOf(id), String.valueOf(createdBy), String.valueOf(createdAt), String.valueOf(status), String.valueOf(username), String.valueOf(password), String.valueOf(firstName), String.valueOf(lastName), String.valueOf(role), String.valueOf(phoneNumber), String.valueOf(dob)};
+        return new String[]{String.valueOf(id), String.valueOf(createdBy), String.valueOf(createdAt), String.valueOf(status), String.valueOf(username), String.valueOf(password), String.valueOf(firstName), String.valueOf(lastName), String.valueOf(role), String.valueOf(phoneNumber), String.valueOf(dob),String.valueOf(email)};
     }
 
     @Override
     public boolean validate() {
-        return false;
+        return !(TypeConverter.stringIsEmpty(this.username) ||
+                TypeConverter.stringIsEmpty(this.password) ||
+                TypeConverter.stringIsEmpty(this.firstName) ||
+                TypeConverter.stringIsEmpty(this.lastName) ||
+                TypeConverter.stringIsEmpty(this.email) ||
+                TypeConverter.stringIsEmpty(TypeConverter.localDateToString(this.dob)) ||
+                TypeConverter.stringIsEmpty(this.phoneNumber));
     }
 
     public String getUsername() {
