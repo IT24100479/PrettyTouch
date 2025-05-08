@@ -31,6 +31,9 @@
                 <li><a href="<%=pathUrl+"#about"%>">About</a></li>
                 <li><a href="<%=pathUrl+"#offersPage"%>">Offers</a></li>
                 <li><a href="<%=pathUrl+"#services"%>">Services</a></li>
+                <li><a href="feedback.jsp" target="_blank" class="nav-link">Feedback</a></li>
+
+
 
                 <li><a href="<%=request.getContextPath()+"/appointment/createAppointment.jsp"%>" id="booking-link">Book Now</a></li>
                 <% if (logUser!=null && GlobalConst.USER_TYPE_ADMIN.equalsIgnoreCase(logUser.getRole())) { %>
