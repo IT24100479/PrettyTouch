@@ -127,7 +127,20 @@ public class UserService implements Services{
 
     @Override
     public boolean updateFile() {
-        return true;
+        String filePath = FIleConst.FILE_PATH + FIleConst.USER_FILE;
+        try {
+            CSVWriter writer = new CSVWriter(new FileWriter(filePath));
+            writer.writeNext(FIleConst.USER_HEADERS);
+            for (int i = 0; i < this.allUsers.size(); i++) {
+                writer.writeNext(this.allUsers.get(i).getCSVLine());
+            }
+            writer.close();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+
     }
 
 }
