@@ -171,4 +171,15 @@ public class UserService implements Services{
         }
         return url;
     }
+    public List<UserModel> getUserWithFilter(String type) {
+        List<UserModel> data = new ArrayList<>();
+        type=type+"";
+        for (int i = 0; i < this.allUsers.size(); i++) {
+            UserModel model = (UserModel) this.allUsers.get(i);
+            if (model.getStatus() && (TypeConverter.stringIsEmpty(type) || type.equalsIgnoreCase(model.getRole()))) {
+                data.add(model);
+            }
+        }return data;
+    }
+
 }
