@@ -102,4 +102,10 @@ public class UserModel extends Model {
     public void setDOB(String dob) {
         this.dob = TypeConverter.stringToLocalDate(dob);
     }
+    public String getEmail(){
+        return email;
+    }
+    public void setEmail(String email){
+        this.email=email;
+    }
 }
