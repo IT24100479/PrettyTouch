@@ -94,7 +94,13 @@ public class UserService implements Services{
     @Override
     public boolean add(Model user) {
         //ToDo find user from allUsers list and add data same time it need to add data in csv file
-        return true;
+       UserModel userModel=(UserModel) user;
+       UserModel.checkCreatedAtAndID(allUsers);
+       allUsers.add(userModel);
+       Model[] temp = this.allUsers.toArray(Model[]::new);
+       this.quickSort.quickSort(temp,0,this.allUsers.size()- 1,"id");
+       this.allUsers = new ArrayList<>(Arrays.asList(temp));
+       return this.updateFile();
     }
     @Override
     public boolean update(Model user) {
