@@ -1,9 +1,16 @@
-id,createdBy,createdAt,status,type,serviceName,description,printPrice,realPrice,imageUrl,isOffer
-1,1,2025-04-18T11:42:28,1,service,Hair Styling,"Professional haircuts, styling, and treatments tailored to your unique hair type and personal style.",2500.0,2500.0,,0
-2,1,2025-04-18T11:42:29,1,service,Hair Colouring,"Expert color services including highlights, balayage, ombre, and full color transformations.",100.00,100.00,,0
-3,1,2025-04-18T11:42:30,0,service,Facials,"Rejuvenating facial treatments designed to cleanse, exfoliate, and nourish your skin.",500.00,500.00,,0
-4,1,2025-04-18T11:42:31,1,offer,Bridal Package,"Complete bridal makeup
+"id","createdBy","createdAt","status","type","serviceName","description","printPrice","realPrice","imageUrl","isOffer"
+"1","1","2025-04-18T11:42:28","1","service","Hair Styling","Professional haircuts, styling, and treatments tailored to your unique hair type and personal style.","0.0","2500.0","https://images.unsplash.com/photo-1519735777090-ec97162dc266?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80","0"
+"2","1","2025-04-18T11:42:29","1","service","Hair Colouring","Expert color services including highlights, balayage, ombre, and full color transformations.","100.0","100.0","https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80","0"
+"3","1","2025-04-18T11:42:30","0","service","Facials","Rejuvenating facial treatments designed to cleanse, exfoliate, and nourish your skin.","500.0","500.0","https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80","0"
+"4","1","2025-04-18T11:42:34","1","offer","Bridal Package","Complete bridal makeup8
 Professional hair styling
 Manicure & pedicure
 Free trial session
-Complimentary bridal consultation",2500.00,3500.00,,1
+Complimentary bridal consultation","3500.0","2500.0","","1"
+"5","1","2025-04-18T11:42:36","1","offer","Spa Day","Full body massage (60 mins)
+Detox facial treatment
+Complimentary bridal consultation","65000.0","30500.0","","1"
+"6","1","2025-05-01T21:12:13.299238300","0","Service","test","testr edit","0.0","34.0","https://images.unsplash.com/photo-1445117627052-274425469152?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80","0"
+"7","1","2025-05-01T21:13:04.946289100","0","Offer","test offer","testr1
+gghjda 8
+sad","789.0","34.0","","1"
