@@ -116,7 +116,13 @@ public class UserService implements Services{
     @Override
     public boolean delete(int id) {
         //ToDo soft delete only status change 1 to 0
-        return true;
+        for(int i=0;i<this.allUsers.size();i++){
+            if(this.allUsers.get(i).getId()==id){
+                this.allUsers.get(i).setStatus("0");
+                return this.update(this.allUsers.get(i));
+            }
+        }
+        return false;
     }
 
     @Override
