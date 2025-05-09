@@ -8,8 +8,11 @@ import com.janani.prettytouch.servlet.Feedback;
 import com.janani.prettytouch.util.QuickSort;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
+import com.opencsv.CSVWriter;
+import com.opencsv.ICSVWriter;
 
 import java.io.FileReader;
+import java.io.FilterWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -130,8 +133,25 @@ public class FeedbackService implements Services{
     }
 
     @Override
-    public boolean updateFile() {
+    public boolean updateFile()
 
-        return true;
+    {
+        String filepath = FIleConst.FILE_PATH + FIleConst.RATING_FILE;
+        try{
+            CSVWriter writer = new CSVWriter(new FilterWriter(filepath);
+            writer.writeNext(FIleConst.RATING_HEADERS);
+            for (int i =0 ; i < allRatings.size(); i++) {
+                writer.writeNext(this.allRatings.get(i).getCSVLine());
+
+
+            }
+            writer.close();
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            }
+
+
+        return false;
     }
 }
