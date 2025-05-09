@@ -108,12 +108,30 @@ public class FeedbackService implements Services{
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(int id)
+    {
+        for (int i =0 ; i < this.allRatings.size(); i++) {
+            if (this.allRatings.get(i).getId() == id) {
+                this.allRatings.get(i).setStatus("0");
+                return this.update(this.allRatings.get(i));
+            }
+        }
         return false;
+    }
+
+    public FeedbackModel getRatingForAppointment(int id) {
+        for (int i =0 ; i < this.allRatings.size(); i++) {
+            FeedbackModel model = (FeedbackModel) this.allRatings.get(i);
+            if (model.getId() == id) {
+                return model;
+            }
+        }
+        return null;
     }
 
     @Override
     public boolean updateFile() {
+
         return true;
     }
 }
