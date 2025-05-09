@@ -22,8 +22,8 @@ public class UserModel extends Model {
         this.lastName = lastName;
         this.role = role;
         this.phoneNumber = phoneNumber;
-        this.email = email;
         setDOB(dob);
+        this.email = email;
     }
 
 

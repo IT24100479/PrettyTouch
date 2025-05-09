@@ -62,10 +62,10 @@ public class UserService implements Services{
 
             for (int i = 0; i < allData.size(); i++) {
                 String[] row = allData.get(i);
-                if (row.length >= 11) {
+                if (row.length >= 12) {
                     UserModel user = new UserModel(row[0],
                             row[1],row[2],row[3],row[4],row[5],
-                            row[6],row[7],row[8],row[9],row[10]
+                            row[6],row[7],row[8],row[9],row[10],row[11]
                             );
                     allUsers.add(user);
                 }
@@ -95,16 +95,16 @@ public class UserService implements Services{
     public boolean add(Model user) {
         //ToDo find user from allUsers list and add data same time it need to add data in csv file
        UserModel userModel=(UserModel) user;
-       UserModel.checkCreatedAtAndID(allUsers);
+       userModel.checkCreatedAtAndID(allUsers);
        allUsers.add(userModel);
        Model[] temp = this.allUsers.toArray(Model[]::new);
-       this.quickSort.quickSort(temp,0,this.allUsers.size()- 1,"id");
+       this.quickSort.quickSort(temp,0,this.allUsers.size()- 1);
        this.allUsers = new ArrayList<>(Arrays.asList(temp));
        return this.updateFile();
     }
     @Override
     public boolean update(Model user) {
-        //ToDo find user from allUsers list and update data same time it need to update data in csv file
+        // find user from allUsers list and update data same time it need to update data in csv file
         for(int i =0;i<this.allUsers.size();i++){
             if(this.allUsers.get(i).getId()== user.getId()){
                 this.allUsers.remove(i);
@@ -115,7 +115,7 @@ public class UserService implements Services{
     }
     @Override
     public boolean delete(int id) {
-        //ToDo soft delete only status change 1 to 0
+        // soft delete only status change 1 to 0
         for(int i=0;i<this.allUsers.size();i++){
             if(this.allUsers.get(i).getId()==id){
                 this.allUsers.get(i).setStatus("0");
