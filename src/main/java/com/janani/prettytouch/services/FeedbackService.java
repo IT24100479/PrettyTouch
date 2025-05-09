@@ -97,6 +97,12 @@ public class FeedbackService implements Services{
     @Override
     public boolean update(Model model)
     {
+        for (int i =0 ; i < this.allRatings.size(); i++) {
+            if (this.allRatings.get(i).getId() == model.getId()) {
+                this.allRatings.remove(i);
+                return this.add(model);
+            }
+        }
 
         return false;
     }
