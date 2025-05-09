@@ -12,7 +12,9 @@ import com.opencsv.CSVWriter;
 import com.opencsv.ICSVWriter;
 
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.FilterWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -133,12 +135,10 @@ public class FeedbackService implements Services{
     }
 
     @Override
-    public boolean updateFile()
-
-    {
+    public boolean updateFile() {
         String filepath = FIleConst.FILE_PATH + FIleConst.RATING_FILE;
         try{
-            CSVWriter writer = new CSVWriter(new FilterWriter(filepath);
+            CSVWriter writer = new CSVWriter(new FileWriter(filepath);
             writer.writeNext(FIleConst.RATING_HEADERS);
             for (int i =0 ; i < allRatings.size(); i++) {
                 writer.writeNext(this.allRatings.get(i).getCSVLine());
