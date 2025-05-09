@@ -1,15 +1,19 @@
 package com.janani.prettytouch.services;
 
 import com.janani.prettytouch.model.Model;
+import com.janani.prettytouch.util.QuickSort;
 
 import java.util.List;
 
 public class FeedbackService implements Services{
 
-    private List<Model> allServices;
+    private List<Model> allRatings;
     private static FeedbackService feedbackService;
+    private final QuickSort quickSort;
+
 
     private FeedbackService() {
+        this.quickSort = new QuickSort();
         this.readAll();
     }
     public static FeedbackService getInstance() {
