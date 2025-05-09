@@ -9,17 +9,18 @@ public class FeedbackModel extends Model {
     private int rating;
     private String comment;
     private int AppointmentId;
-    private int userId;
 
-    public FeedbackModel(String id, String createdBy, String createdAt, String status, String rating, String comment,String appointmentId, String userId) {
+
+    public FeedbackModel(String id, String createdBy, String createdAt, String status, String rating, String comment,String appointmentId) {
         super(id, createdBy, createdAt, status);
         setRating(rating);
         setAppointmentId(appointmentId);
-        setUserId(userId);
         this.comment = comment;
     }
 
-    public FeedbackModel() {super();}
+    public FeedbackModel() {
+        super();
+    }
 
     public int getAppointmentId(){return AppointmentId;}
 
@@ -34,14 +35,6 @@ public class FeedbackModel extends Model {
         return  (ServiceModel) ServiceService.getInstance().getById(this.getAppointmentId());
     }
 
-    public int getUserId(){return userId;}
-
-    public UserModel getUser(){
-        return (UserModel) UserService.getInstance().getById(userId);
-    }
-    public void setUserId(String userId){
-        this.userId = TypeConverter.stringToInt(userId);
-    }
 
 
     @Override
@@ -54,8 +47,7 @@ public class FeedbackModel extends Model {
         return AppointmentId != 0;
     }
 
-    public int getRating() {
-        return rating;
+    public int getRating() {return rating;
     }
 
     public void setRating(String rating) {
