@@ -2,17 +2,20 @@ package com.janani.prettytouch.model;
 
 import com.janani.prettytouch.services.AppointmentService;
 import com.janani.prettytouch.services.ServiceService;
+import com.janani.prettytouch.services.UserService;
 import com.janani.prettytouch.util.TypeConverter;
 
 public class FeedbackModel extends Model {
     private int rating;
     private String comment;
     private int AppointmentId;
+    private int userId;
 
-    public FeedbackModel(String id, String createdBy, String createdAt, String status, String rating, String comment,String appointmentId) {
+    public FeedbackModel(String id, String createdBy, String createdAt, String status, String rating, String comment,String appointmentId, String userId) {
         super(id, createdBy, createdAt, status);
         setRating(rating);
         setAppointmentId(appointmentId);
+        setUserId(userId);
         this.comment = comment;
     }
 
@@ -30,6 +33,16 @@ public class FeedbackModel extends Model {
     public  ServiceModel getService(){
         return  (ServiceModel) ServiceService.getInstance().getById(this.getAppointmentId());
     }
+
+    public int getUserId(){return userId;}
+
+    public UserModel getUser(){
+        return (UserModel) UserService.getInstance().getById(userId);
+    }
+    public void setUserId(String userId){
+        this.userId = TypeConverter.stringToInt(userId);
+    }
+
 
     @Override
     public String[] getCSVLine() {
