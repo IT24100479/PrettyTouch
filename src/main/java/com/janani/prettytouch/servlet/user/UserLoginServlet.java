@@ -32,11 +32,9 @@ public class UserLoginServlet extends HttpServlet {
                 resp.getWriter().write(new Gson().toJson(new LoginResponseModel("login success")));
             }else {
                 resp.getWriter().write(new Gson().toJson(new LoginResponseModel("Invalid User Name Or Password")));
-
             }
         }else {
             resp.getWriter().write(new Gson().toJson(new LoginResponseModel("User Name Or Password Can Not Be Empty")));
-
 
         }
 

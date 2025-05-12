@@ -66,19 +66,19 @@ public class AppointmentService implements Services {
         }
     }
 
-    private void print() {
-        for (String date : appointments.keySet()) {
-
-            System.out.println(date);
-            for (String timeSlot : appointments.get(date).keySet()) {
-                System.out.println("\t" + GlobalConst.TIME_SLOT_LIST.get(Integer.parseInt(timeSlot)));
-                for (Model appointment : appointments.get(date).get(timeSlot).getQueueList()) {
-                    System.out.println("\t\t\t" + appointment.getId() + " , " + appointment.getCreatedAt());
-                }
-            }
-
-        }
-    }
+//    private void print() {
+//        for (String date : appointments.keySet()) {
+//
+//            System.out.println(date);
+//            for (String timeSlot : appointments.get(date).keySet()) {
+//                System.out.println("\t" + GlobalConst.TIME_SLOT_LIST.get(Integer.parseInt(timeSlot)));
+//                for (Model appointment : appointments.get(date).get(timeSlot).getQueueList()) {
+//                    System.out.println("\t\t\t" + appointment.getId() + " , " + appointment.getCreatedAt());
+//                }
+//            }
+//
+//        }
+//    }
 
     @Override
     public List<Model> getAll() {
@@ -154,7 +154,7 @@ public class AppointmentService implements Services {
         if (this.addToQueue(appointmentModel)) {
             allAppointments.add(appointmentModel);
             Model[] temp = this.allAppointments.toArray(Model[]::new);
-            this.quickSort.quickSort(temp, 0, this.allAppointments.size() - 1);
+            this.quickSort.quickSort(temp, 0, this.allAppointments.size() - 1,"id");
             this.allAppointments =  new ArrayList<>(Arrays.asList(temp));
             return this.updateFile();
         }
@@ -177,10 +177,6 @@ public class AppointmentService implements Services {
         for (int i = 0; i < this.allAppointments.size(); i++) {
             if (this.allAppointments.get(i).getId() == appointmentModel.getId()) {
                 oldModel = (AppointmentModel) this.allAppointments.get(i);
-//                if (this.appointments.containsKey(oldModel.getDate().toString()) &&
-//                        this.appointments.get(oldModel.getDate().toString()).containsKey(oldModel.getTimeSlotId() + "")) {
-//                    this.appointments.get(oldModel.getDate().toString()).get(oldModel.getTimeSlotId() + "").findAndRemove(oldModel.getId());
-//                }
                 this.removeAppointmentFromQueue(oldModel);
                 this.allAppointments.remove(i);
                 return this.add(appointmentModel);
