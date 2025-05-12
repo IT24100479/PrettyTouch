@@ -43,7 +43,6 @@ public class Pay extends HttpServlet {
                 resp.getWriter().write(new Gson().toJson(new LoginResponseModel("success")));
             }else{
                 resp.getWriter().write(new Gson().toJson(new LoginResponseModel("Can Not Find Appointment")));
-
             }
 
         }else{

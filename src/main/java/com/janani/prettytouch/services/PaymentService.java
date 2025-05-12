@@ -84,7 +84,7 @@ public class PaymentService implements Services{
         paymentModel.checkCreatedAtAndID(allPayments);
         allPayments.add(paymentModel);
         Model[] temp = this.allPayments.toArray(Model[]::new);
-        this.quickSort.quickSort(temp, 0, this.allPayments.size() - 1);
+        this.quickSort.quickSort(temp, 0, this.allPayments.size() - 1,"id");
         this.allPayments =  new ArrayList<>(Arrays.asList(temp));
         return this.updateFile();
 

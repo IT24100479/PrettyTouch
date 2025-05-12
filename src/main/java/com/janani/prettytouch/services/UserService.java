@@ -37,7 +37,7 @@ public class UserService implements Services{
             for (int i = 0; i < allUsers.size(); i++) {
                 UserModel user = (UserModel)allUsers.get(i);
                 if (username.equalsIgnoreCase(user.getUsername()) &&
-                password.equalsIgnoreCase(user.getPassword()) &&
+                password.equals(user.getPassword()) &&
                 user.getStatus()) {
                     return user;
                 }
@@ -93,12 +93,11 @@ public class UserService implements Services{
 
     @Override
     public boolean add(Model user) {
-        //ToDo find user from allUsers list and add data same time it need to add data in csv file
        UserModel userModel=(UserModel) user;
        userModel.checkCreatedAtAndID(allUsers);
        allUsers.add(userModel);
        Model[] temp = this.allUsers.toArray(Model[]::new);
-       this.quickSort.quickSort(temp,0,this.allUsers.size()- 1);
+        this.quickSort.quickSort(temp, 0, this.allUsers.size() - 1,"id");
        this.allUsers = new ArrayList<>(Arrays.asList(temp));
        return this.updateFile();
     }
