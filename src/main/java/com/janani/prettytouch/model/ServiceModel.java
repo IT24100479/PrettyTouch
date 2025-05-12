@@ -25,12 +25,27 @@ public class ServiceModel extends Model {
     public boolean getIsOffer() {
         return "1".equals(isOffer);
     }
+    public String getIsOfferCsv() {
+        return isOffer;
+    }
 
     public void setIsOffer(String isOffer) {
         this.isOffer = isOffer;
+        if (isOffer != null && isOffer.equals("1")) {
+            this.type = "Offer";
+        }else {
+            this.type = "Service";
+        }
     }
 
     public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public String getImageUrlShort() {
+        if(TypeConverter.stringIsNotEmpty(imageUrl) && imageUrl.length()>20) {
+            return imageUrl.substring(0, 20)+"...";
+        }
         return imageUrl;
     }
 
@@ -49,15 +64,15 @@ public class ServiceModel extends Model {
 
     @Override
     public boolean validate() {
-        return false;
+        return !(TypeConverter.stringIsEmpty(this.description) ||
+                TypeConverter.stringIsEmpty(this.serviceName)||
+                TypeConverter.stringIsEmpty(this.isOffer)||
+                (!this.getIsOffer() && TypeConverter.stringIsEmpty(this.imageUrl)));
+
     }
 
     public String getType() {
         return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public String getServiceName() {
