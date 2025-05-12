@@ -12,8 +12,9 @@ public class UserModel extends Model {
     private String role;
     private String phoneNumber;
     private LocalDate dob;
+    private String email;
 
-    public UserModel(String id, String createdBy, String createdAt, String status, String username, String password, String firstName, String lastName, String role, String phoneNumber, String dob) {
+    public UserModel(String id, String createdBy, String createdAt, String status, String username, String password, String firstName, String lastName, String role, String phoneNumber, String dob , String email) {
         super(id, createdBy, createdAt, status);
         this.username = username;
         this.password = password;
@@ -22,7 +23,9 @@ public class UserModel extends Model {
         this.role = role;
         this.phoneNumber = phoneNumber;
         setDOB(dob);
+        this.email = email;
     }
+
 
     public UserModel() {
         super();
@@ -30,12 +33,18 @@ public class UserModel extends Model {
 
     @Override
     public String[] getCSVLine() {
-        return new String[]{String.valueOf(id), String.valueOf(createdBy), String.valueOf(createdAt), String.valueOf(status), String.valueOf(username), String.valueOf(password), String.valueOf(firstName), String.valueOf(lastName), String.valueOf(role), String.valueOf(phoneNumber), String.valueOf(dob)};
+        return new String[]{String.valueOf(id), String.valueOf(createdBy), String.valueOf(createdAt), String.valueOf(status), String.valueOf(username), String.valueOf(password), String.valueOf(firstName), String.valueOf(lastName), String.valueOf(role), String.valueOf(phoneNumber), String.valueOf(dob),String.valueOf(email)};
     }
 
     @Override
     public boolean validate() {
-        return false;
+        return !(TypeConverter.stringIsEmpty(this.username) ||
+                TypeConverter.stringIsEmpty(this.password) ||
+                TypeConverter.stringIsEmpty(this.firstName) ||
+                TypeConverter.stringIsEmpty(this.lastName) ||
+                TypeConverter.stringIsEmpty(this.email) ||
+                TypeConverter.stringIsEmpty(TypeConverter.localDateToString(this.dob)) ||
+                TypeConverter.stringIsEmpty(this.phoneNumber));
     }
 
     public String getUsername() {
@@ -92,5 +101,11 @@ public class UserModel extends Model {
 
     public void setDOB(String dob) {
         this.dob = TypeConverter.stringToLocalDate(dob);
+    }
+    public String getEmail(){
+        return email;
+    }
+    public void setEmail(String email){
+        this.email=email;
     }
 }
