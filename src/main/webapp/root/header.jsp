@@ -43,7 +43,7 @@
                         <li><a href="<%=request.getContextPath()+"/payment/payment.jsp"%>">Payment</a></li>
                         <li><a href="<%=request.getContextPath()+"/payment/report.jsp"%>">Payment Report</a></li>
                         <li><a href="<%=request.getContextPath()+"/user/userManage.jsp"%>">User Manage</a></li>
-                        <li><a href="#">Service Manage</a></li>
+                        <li><a href="<%=request.getContextPath()+"/services/serviceManage.jsp"%>">Service Manage</a></li>
                         <li><a href="#">Rating Manage</a></li>
                     </ul>
                 </li>
