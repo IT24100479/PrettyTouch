@@ -51,19 +51,6 @@ public abstract class Model {
         this.createdAt = TypeConverter.stringToLocalDateTime(createdAt);
     }
 
-    public void checkCreatedAtAndID(List<Model> list){
-        if (this.getCreatedAt() == null || this.getCreatedAt().toString().isEmpty()) {
-            this.setCreatedAt(LocalDateTime.now().toString());
-        }
-        if(this.getId()==0){
-            int id = 1;
-            if(!list.isEmpty()){
-                id = list.getLast().getId()+1;
-            }
-            this.setId(id+"");
-        }
-    }
-
     public boolean getStatus() {
         return "1".equals(status);
     }
@@ -79,4 +66,17 @@ public abstract class Model {
     public abstract String[] getCSVLine();
 
     public abstract boolean validate();
+
+    public void checkCreatedAtAndID(List <Model> list){
+        if (this.getCreatedAt() == null || this.getCreatedAt().toString().isEmpty()) {
+            this.setCreatedAt(LocalDateTime.now().toString());
+        }
+        if(this.getId()==0){
+            int id = 1;
+            if(!list.isEmpty()){
+                id = list.getLast().getId()+1;
+            }
+            this.setId(id+"");
+        }
+    }
 }

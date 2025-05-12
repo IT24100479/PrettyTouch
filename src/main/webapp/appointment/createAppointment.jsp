@@ -62,7 +62,7 @@
                     </div>
                 <%}%>
                 <form class="booking-form" id="appointment-form" method="POST" action="<%=actionUrl%>">
-                    <% if (logUser!=null && GlobalConst.USER_TYPE_ADMIN.equalsIgnoreCase(logUser.getRole())) { %>
+                    <% if (GlobalConst.USER_TYPE_ADMIN.equalsIgnoreCase(logUser.getRole())) { %>
                         <div class="form-group">
                             <label for="client">Client Name</label>
                             <select id="client" name="client" required <%=edit?"disabled":""%>>

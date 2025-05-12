@@ -33,6 +33,12 @@
                 <li><a href="<%=pathUrl+"#services"%>">Services</a></li>
 
                 <li><a href="<%=request.getContextPath()+"/appointment/createAppointment.jsp"%>" id="booking-link">Book Now</a></li>
+                <% if (logUser!=null && GlobalConst.USER_TYPE_USER.equalsIgnoreCase(logUser.getRole())) { %>
+                <li><a href="<%=request.getContextPath()+"/feedback/createFeedback.jsp"%>">Feedback</a></li>
+                <%}%>
+                <% if (logUser!=null && GlobalConst.USER_TYPE_USER.equalsIgnoreCase(logUser.getRole())) { %>
+                    <li><a href="<%=request.getContextPath()+"/user/signUp.jsp"%>">My Profile</a></li>
+                <%}%>
                 <% if (logUser!=null && GlobalConst.USER_TYPE_ADMIN.equalsIgnoreCase(logUser.getRole())) { %>
 
                 <li class="dropdown">
@@ -43,8 +49,10 @@
                         <li><a href="<%=request.getContextPath()+"/payment/payment.jsp"%>">Payment</a></li>
                         <li><a href="<%=request.getContextPath()+"/payment/report.jsp"%>">Payment Report</a></li>
                         <li><a href="<%=request.getContextPath()+"/user/userManage.jsp"%>">User Manage</a></li>
+                        <li><a href="<%=request.getContextPath()+"/user/signUp.jsp"%>">Create User</a></li>
                         <li><a href="<%=request.getContextPath()+"/services/serviceManage.jsp"%>">Service Manage</a></li>
-                        <li><a href="#">Rating Manage</a></li>
+                        <li><a href="<%=request.getContextPath()+"/services/createService.jsp"%>">Create Service</a></li>
+                        <li><a href="<%=request.getContextPath()+"/feedback/manageFeedback.jsp"%>">Rating Manage</a></li>
                     </ul>
                 </li>
                 <%}%>
@@ -70,6 +78,9 @@
         <div class="login-form">
             <h2>Login to Your Account</h2>
             <h5 id="loginerror" style="display: flex;justify-content: center;color: red;"></h5>
+            <% if ("true".equalsIgnoreCase(request.getParameter("login"))) { %>
+            <h5 id="" style="display: flex;justify-content: center;color: green;"> User Created Please Login</h5>
+            <%}%>
             <form id="login-form">
                 <div class="form-group">
                     <label for="username">Username</label>
@@ -117,7 +128,7 @@
         loginModal.style.display = 'block';
     });
 
-    <% if (logUser==null && request.getRequestURI().contains("/appointment/createAppointment.jsp")) { %>
+    <% if (logUser==null && (request.getRequestURI().contains("/appointment/createAppointment.jsp")||"true".equalsIgnoreCase(request.getParameter("login")))) { %>
         loginModal.style.display = 'block';
     <%}%>
 

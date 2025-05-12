@@ -106,8 +106,8 @@ public class ServiceService implements Services {
         serviceModel.checkCreatedAtAndID(allServices);
         allServices.add(serviceModel);
         Model[] temp = this.allServices.toArray(Model[]::new);
-        this.quickSort.quickSort(temp, 0, this.allServices.size() - 1);
-        this.allServices = new ArrayList<>(Arrays.asList(temp));
+        this.quickSort.quickSort(temp, 0, this.allServices.size() - 1,"id");
+        this.allServices =  new ArrayList<>(Arrays.asList(temp));
         return this.updateFile();
     }
 
