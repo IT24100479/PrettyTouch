@@ -31,11 +31,14 @@
                 <li><a href="<%=pathUrl+"#about"%>">About</a></li>
                 <li><a href="<%=pathUrl+"#offersPage"%>">Offers</a></li>
                 <li><a href="<%=pathUrl+"#services"%>">Services</a></li>
-                <li><a href="<%=request.getContextPath()+"/Feedback/createFeedback.jsp"%>" target="_blank" class="nav-link">Feedback</a></li>
-
-
 
                 <li><a href="<%=request.getContextPath()+"/appointment/createAppointment.jsp"%>" id="booking-link">Book Now</a></li>
+                <% if (logUser!=null && GlobalConst.USER_TYPE_USER.equalsIgnoreCase(logUser.getRole())) { %>
+                <li><a href="<%=request.getContextPath()+"/Feedback/createFeedback.jsp"%>">Feedback</a></li>
+                <%}%>
+                <% if (logUser!=null && GlobalConst.USER_TYPE_USER.equalsIgnoreCase(logUser.getRole())) { %>
+                <li><a href="<%=request.getContextPath()+"/user/signUp.jsp"%>">My Profile</a></li>
+                <%}%>
                 <% if (logUser!=null && GlobalConst.USER_TYPE_ADMIN.equalsIgnoreCase(logUser.getRole())) { %>
 
                 <li class="dropdown">
@@ -45,19 +48,21 @@
                         <li><a href="<%=request.getContextPath()+"/appointment/appointments.jsp"%>">Appointment Manage</a></li>
                         <li><a href="<%=request.getContextPath()+"/payment/payment.jsp"%>">Payment</a></li>
                         <li><a href="<%=request.getContextPath()+"/payment/report.jsp"%>">Payment Report</a></li>
-                        <li><a href="#">User Manage</a></li>
-                        <li><a href="#">Service Manage</a></li>
-                        <li><a href="#">Rating Manage</a></li>
+                        <li><a href="<%=request.getContextPath()+"/user/userManage.jsp"%>">User Manage</a></li>
+                        <li><a href="<%=request.getContextPath()+"/user/signUp.jsp"%>">Create User</a></li>
+                        <li><a href="<%=request.getContextPath()+"/services/serviceManage.jsp"%>">Service Manage</a></li>
+                        <li><a href="<%=request.getContextPath()+"/services/createService.jsp"%>">Create Service</a></li>
+                        <li><a href="<%=request.getContextPath()+"/Feedback/manageFeedback.jsp"%>">Rating Manage</a></li>
                     </ul>
                 </li>
                 <%}%>
                 <% if (logUser!=null && GlobalConst.USER_TYPE_USER.equalsIgnoreCase(logUser.getRole())) { %>
-                    <li><a href="<%=request.getContextPath()+"/appointment/appointments.jsp"%>">My Appointment</a></li>
+                <li><a href="<%=request.getContextPath()+"/appointment/appointments.jsp"%>">My Appointment</a></li>
                 <%}%>
                 <% if (logUser==null) { %>
-                    <li><a href="#" id="login-btn">Login</a></li>
+                <li><a href="#" id="login-btn">Login</a></li>
                 <%}else{%>
-                    <li><a href="<%=request.getContextPath()+"/user/logout"%>" >Logout</a></li>
+                <li><a href="<%=request.getContextPath()+"/user/logout"%>" >Logout</a></li>
                 <%}%>
             </ul>
         </nav>
@@ -73,6 +78,9 @@
         <div class="login-form">
             <h2>Login to Your Account</h2>
             <h5 id="loginerror" style="display: flex;justify-content: center;color: red;"></h5>
+            <% if ("true".equalsIgnoreCase(request.getParameter("login"))) { %>
+            <h5 id="" style="display: flex;justify-content: center;color: green;"> User Created Please Login</h5>
+            <%}%>
             <form id="login-form">
                 <div class="form-group">
                     <label for="username">Username</label>
@@ -120,8 +128,8 @@
         loginModal.style.display = 'block';
     });
 
-    <% if (logUser==null && request.getRequestURI().contains("/appointment/createAppointment.jsp")) { %>
-        loginModal.style.display = 'block';
+    <% if (logUser==null && (request.getRequestURI().contains("/appointment/createAppointment.jsp")||"true".equalsIgnoreCase(request.getParameter("login")))) { %>
+    loginModal.style.display = 'block';
     <%}%>
 
     closeLogin.addEventListener('click', () => {
