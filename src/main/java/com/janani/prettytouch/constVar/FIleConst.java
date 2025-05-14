@@ -10,4 +10,7 @@ public class FIleConst {
     public static final String[] APPOINTMENT_HEADERS = {"id","createdBy","createdAt","status","serviceId","date","timeSlotId","requestData","userId"};
     public static final String PAYMENT_FILE = "payment.csv";
     public static final String[] PAYMENT_HEADERS = {"id","createdBy","createdAt","status","appointmentId","amount","cash"};
+    public  static final String RATING_FILE = "ratings.csv";
+    public static final String[] RATING_HEADERS = {"id","createdBy","createdAt","status","rating","comment","appointmentId"};
+
 }
