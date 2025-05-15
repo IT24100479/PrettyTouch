@@ -885,7 +885,7 @@ nav ul li.dropdown:hover .dropdown-menu {
     margin-top: 0px;
     padding-top: 0px;
     background: #fff;
-    min-width: 180px;
+    min-width: 300px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.1);
     z-index: 1001;
 }

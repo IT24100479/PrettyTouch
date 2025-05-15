@@ -1,6 +1,8 @@
 package com.janani.prettytouch.servlet.user;
 
+import com.google.gson.Gson;
 import com.janani.prettytouch.model.UserModel;
+import com.janani.prettytouch.model.responces.LoginResponseModel;
 import com.janani.prettytouch.services.AppointmentService;
 import com.janani.prettytouch.services.UserService;
 import jakarta.servlet.ServletException;
@@ -27,12 +29,12 @@ public class UserLoginServlet extends HttpServlet {
             if (user != null) {
                 HttpSession session = req.getSession(true);
                 session.setAttribute("user", user);
-                resp.getWriter().write("{\"msg\":\"login success\"}");
+                resp.getWriter().write(new Gson().toJson(new LoginResponseModel("login success")));
             }else {
-                resp.getWriter().write("{\"msg\":\"Invalid User Name Or Password\"}");
+                resp.getWriter().write(new Gson().toJson(new LoginResponseModel("Invalid User Name Or Password")));
             }
         }else {
-            resp.getWriter().write("{\"msg\":\"User Name Or Password Can Not Be Empty\"}");
+            resp.getWriter().write(new Gson().toJson(new LoginResponseModel("User Name Or Password Can Not Be Empty")));
 
         }
 

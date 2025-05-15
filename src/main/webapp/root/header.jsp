@@ -34,10 +34,8 @@
 
                 <li><a href="<%=request.getContextPath()+"/appointment/createAppointment.jsp"%>" id="booking-link">Book Now</a></li>
                 <% if (logUser!=null && GlobalConst.USER_TYPE_USER.equalsIgnoreCase(logUser.getRole())) { %>
-                <li><a href="<%=request.getContextPath()+"/Feedback/createFeedback.jsp"%>">Feedback</a></li>
-                <%}%>
-                <% if (logUser!=null && GlobalConst.USER_TYPE_USER.equalsIgnoreCase(logUser.getRole())) { %>
-                <li><a href="<%=request.getContextPath()+"/user/signUp.jsp"%>">My Profile</a></li>
+                  <li><a href="<%=request.getContextPath()+"/Feedback/createFeedback.jsp"%>">Feedback</a></li>
+                  <li><a href="<%=request.getContextPath()+"/user/signUp.jsp"%>">My Profile</a></li>
                 <%}%>
                 <% if (logUser!=null && GlobalConst.USER_TYPE_ADMIN.equalsIgnoreCase(logUser.getRole())) { %>
 
@@ -52,7 +50,7 @@
                         <li><a href="<%=request.getContextPath()+"/user/signUp.jsp"%>">Create User</a></li>
                         <li><a href="<%=request.getContextPath()+"/services/serviceManage.jsp"%>">Service Manage</a></li>
                         <li><a href="<%=request.getContextPath()+"/services/createService.jsp"%>">Create Service</a></li>
-                        <li><a href="<%=request.getContextPath()+"/Feedback/manageFeedback.jsp"%>">Rating Manage</a></li>
+                        <li><a href="<%=request.getContextPath()+"/feedback/manageFeedback.jsp"%>">Rating Manage</a></li>
                     </ul>
                 </li>
                 <%}%>
@@ -129,7 +127,9 @@
     });
 
     <% if (logUser==null && (request.getRequestURI().contains("/appointment/createAppointment.jsp")||"true".equalsIgnoreCase(request.getParameter("login")))) { %>
-    loginModal.style.display = 'block';
+
+        loginModal.style.display = 'block';
+
     <%}%>
 
     closeLogin.addEventListener('click', () => {
