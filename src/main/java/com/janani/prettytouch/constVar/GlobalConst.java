@@ -10,4 +10,5 @@ public class GlobalConst {
     public static final int QUEUE_SIZE = 5;
     public static final String USER_TYPE_ADMIN = "admin";
     public static final String USER_TYPE_USER = "user";
+    public static final int RATING_COMMENT_SHORT_SIZE = 150;
 }
