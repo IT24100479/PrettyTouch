@@ -65,7 +65,7 @@
 </section>
 
 <jsp:include page="services/indexOffersServices.jsp"/>
-<jsp:include page="Feedback/showFeedback.jsp"/>
+<jsp:include page="feedback/showFeedbacks.jsp"/>
 
 
 
