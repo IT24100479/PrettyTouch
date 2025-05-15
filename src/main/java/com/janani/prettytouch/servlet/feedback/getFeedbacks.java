@@ -2,8 +2,8 @@ package com.janani.prettytouch.servlet.feedback;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.janani.prettytouch.adapter.LocalDateAdapter;
-import com.janani.prettytouch.adapter.LocalDateTimeAdapter;
+import com.janani.prettytouch.adapters.LocalDateAdapter;
+import com.janani.prettytouch.adapters.LocalDateTimeAdapter;
 import com.janani.prettytouch.model.responces.FeedBackResponseModel;
 import com.janani.prettytouch.services.FeedbackService;
 import com.janani.prettytouch.util.TypeConverter;
