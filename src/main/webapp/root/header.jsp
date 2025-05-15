@@ -34,10 +34,8 @@
 
                 <li><a href="<%=request.getContextPath()+"/appointment/createAppointment.jsp"%>" id="booking-link">Book Now</a></li>
                 <% if (logUser!=null && GlobalConst.USER_TYPE_USER.equalsIgnoreCase(logUser.getRole())) { %>
-                <li><a href="<%=request.getContextPath()+"/feedback/createFeedback.jsp"%>">Feedback</a></li>
-                <%}%>
-                <% if (logUser!=null && GlobalConst.USER_TYPE_USER.equalsIgnoreCase(logUser.getRole())) { %>
-                    <li><a href="<%=request.getContextPath()+"/user/signUp.jsp"%>">My Profile</a></li>
+                  <li><a href="<%=request.getContextPath()+"/Feedback/createFeedback.jsp"%>">Feedback</a></li>
+                  <li><a href="<%=request.getContextPath()+"/user/signUp.jsp"%>">My Profile</a></li>
                 <%}%>
                 <% if (logUser!=null && GlobalConst.USER_TYPE_ADMIN.equalsIgnoreCase(logUser.getRole())) { %>
 
@@ -57,12 +55,12 @@
                 </li>
                 <%}%>
                 <% if (logUser!=null && GlobalConst.USER_TYPE_USER.equalsIgnoreCase(logUser.getRole())) { %>
-                    <li><a href="<%=request.getContextPath()+"/appointment/appointments.jsp"%>">My Appointment</a></li>
+                <li><a href="<%=request.getContextPath()+"/appointment/appointments.jsp"%>">My Appointment</a></li>
                 <%}%>
                 <% if (logUser==null) { %>
-                    <li><a href="#" id="login-btn">Login</a></li>
+                <li><a href="#" id="login-btn">Login</a></li>
                 <%}else{%>
-                    <li><a href="<%=request.getContextPath()+"/user/logout"%>" >Logout</a></li>
+                <li><a href="<%=request.getContextPath()+"/user/logout"%>" >Logout</a></li>
                 <%}%>
             </ul>
         </nav>
@@ -129,7 +127,9 @@
     });
 
     <% if (logUser==null && (request.getRequestURI().contains("/appointment/createAppointment.jsp")||"true".equalsIgnoreCase(request.getParameter("login")))) { %>
+
         loginModal.style.display = 'block';
+
     <%}%>
 
     closeLogin.addEventListener('click', () => {
