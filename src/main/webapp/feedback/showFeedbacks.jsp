@@ -44,6 +44,7 @@
     let start = 0;
     let limit = 3;
     function onStart(){
+        console.log('start'+start);
         $.ajax({
             url: '<%=request.getContextPath()+"/feedback/get"%>', // Sample API
             type: 'Get',
