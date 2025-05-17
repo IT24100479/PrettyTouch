@@ -6,6 +6,7 @@ import com.janani.prettytouch.model.AppointmentModel;
 import com.janani.prettytouch.model.PaymentModel;
 import com.janani.prettytouch.model.UserModel;
 import com.janani.prettytouch.model.responces.LoginResponseModel;
+import com.janani.prettytouch.model.responces.PaymentResponseModel;
 import com.janani.prettytouch.services.AppointmentService;
 import com.janani.prettytouch.services.PaymentService;
 import com.janani.prettytouch.util.TypeConverter;
@@ -40,13 +41,13 @@ public class Pay extends HttpServlet {
                 paymentService.add(paymentModel);
                 appointmentModel.setStatus(GlobalConst.APPOINTMENT_STATUS_TYPE.get(0));
                 appointmentService.update(appointmentModel);
-                resp.getWriter().write(new Gson().toJson(new LoginResponseModel("success")));
+                resp.getWriter().write(new Gson().toJson(new PaymentResponseModel("success")));
             }else{
-                resp.getWriter().write(new Gson().toJson(new LoginResponseModel("Can Not Find Appointment")));
+                resp.getWriter().write(new Gson().toJson(new PaymentResponseModel("Can Not Find Appointment")));
             }
 
         }else{
-            resp.getWriter().write(new Gson().toJson(new LoginResponseModel("No permission")));
+            resp.getWriter().write(new Gson().toJson(new PaymentResponseModel("No permission")));
         }
     }
 }
