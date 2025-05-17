@@ -164,15 +164,17 @@ public class FeedbackService implements Services{
 
     public int nextStart(int start, int limit){
         start+=limit;
-        return start>allRatings.size()?0:start;
+        List<FeedbackModel> allList = this.getAllForShow();
+        return start>=allList.size()?0:start;
     }
 
     public List<FeedbackModel> getFeedbackWithLimit(int start, int limit) {
         List<FeedbackModel> feedbackModels = new ArrayList<>();
-        int end =allRatings.size()-start-1-limit;
+        List<FeedbackModel> allList = this.getAllForShow();
+        int end =allList.size()-start-1-limit;
         limit = end<0?-1:end;
-        for (int i = allRatings.size()-(start+1); i >limit ; i--) {
-            FeedbackModel model =(FeedbackModel) allRatings.get(i);
+        for (int i = allList.size()-(start+1); i >limit ; i--) {
+            FeedbackModel model =allList.get(i);
             model.setCreatedByFullUser();
             model.setShortComment(GlobalConst.RATING_COMMENT_SHORT_SIZE);
             feedbackModels.add(model);
