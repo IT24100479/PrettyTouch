@@ -34,7 +34,7 @@
 
                 <li><a href="<%=request.getContextPath()+"/appointment/createAppointment.jsp"%>" id="booking-link">Book Now</a></li>
                 <% if (logUser!=null && GlobalConst.USER_TYPE_USER.equalsIgnoreCase(logUser.getRole())) { %>
-                  <li><a href="<%=request.getContextPath()+"/Feedback/createFeedback.jsp"%>">Feedback</a></li>
+                  <li><a href="<%=request.getContextPath()+"/feedback/createFeedback.jsp"%>">Feedback</a></li>
                   <li><a href="<%=request.getContextPath()+"/user/signUp.jsp"%>">My Profile</a></li>
                 <%}%>
                 <% if (logUser!=null && GlobalConst.USER_TYPE_ADMIN.equalsIgnoreCase(logUser.getRole())) { %>
