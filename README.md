@@ -2,7 +2,8 @@
 # Beauty saloon book appointment system
 ## Group 5
 
->[!IMPORTANT] To run this application you need to change **FILE_PATH** attribute inside src/main/java/com/janani/prettytouch/constVar/FIleConst.java to your data file folder inside your current project.
+>[!IMPORTANT]
+>To run this application you need to change **FILE_PATH** attribute inside src/main/java/com/janani/prettytouch/constVar/FIleConst.java to your data file folder inside your current project.
 
 ## Team member detaills
 * IT24100222 - H. M. V. P. Herath
